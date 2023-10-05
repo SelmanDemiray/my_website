@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
+
 <html>
-    <head>
-        <title>IT Cheat Sheet - A Treasure Trove of IT Knowledge</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-        <style>
+<head>
+<title>IT Cheat Sheet - A Treasure Trove of IT Knowledge</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<noscript><link href="assets/css/noscript.css" rel="stylesheet"/></noscript>
+<style>
             body {
                 background-color: black;
                 color: white;
@@ -37,22 +38,22 @@
                 cursor: pointer;
             }
         </style>
-    </head>
-    <body class="left-sidebar is-preload">
-        <div id="page-wrapper">
-            <!-- ... rest of your HTML ... -->
-            <div class="wrapper style1">
-                <div class="container" id="password-generator">
-                    <header>
-                        <h3>Password Generator</h3>
-                    </header>
-                    <button onclick="generatePassword()">Generate Password</button>
-                    <textarea id="passwordOutput" readonly></textarea>
-                    <p id="reminder"></p>
-                </div>
-            </div>
-            <!-- ... rest of your HTML ... -->
-            <script>
+</head>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
+<!-- ... rest of your HTML ... -->
+<div class="wrapper style1">
+<div class="container" id="password-generator">
+<header>
+<h3>Password Generator</h3>
+</header>
+<button onclick="generatePassword()">Generate Password</button>
+<textarea id="passwordOutput" readonly=""></textarea>
+<p id="reminder"></p>
+</div>
+</div>
+<!-- ... rest of your HTML ... -->
+<script>
                 function generatePassword() {
                     var length = 400;
                     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
@@ -65,12 +66,31 @@
                     document.getElementById('reminder').innerText = 'Remember to change your password in 4-5 days.';
                 }
             </script>
-        </div>
-        <!-- Scripts -->
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/browser.min.js"></script>
-            <script src="assets/js/breakpoints.min.js"></script>
-            <script src="assets/js/util.js"></script>
-            <script src="assets/js/main.js"></script>
-    </body>
+</div>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- Standard Menu -->
+<nav id="nav">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li>
+<a href="#">Coding Projects</a>
+<ul>
+<li><a href="coding1.html">Coding Assignment 1</a></li>
+<li><a href="project2.html">Coding Assignment 2</a></li>
+<li><a href="coding3.html">Coding Assignment 3</a></li>
+</ul>
+</li>
+<li><a href="cheatsheets.html">Cheat Sheets</a></li>
+<li><a href="projects.html">Projects</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+<!-- End of Standard Menu -->
+</body>
 </html>
