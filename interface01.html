@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Coding Projects</title>
+<style>
+    body {
+        background-color: #2c2c2c;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
+    }
+    .header {
+        font-size: 2em;
+        margin: 20px 0;
+        color: #1e90ff;
+    }
+    .project-container {
+        background-color: #333;
+        margin: 10px 0;
+        padding: 20px;
+        border: 2px solid #444;
+        border-radius: 10px;
+        width: 80%;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .project-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .project-title {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #1e90ff;
+    }
+    .project-description {
+        margin-bottom: 10px;
+    }
+    .project-link a {
+        color: #1e90ff;
+        text-decoration: none;
+        font-weight: bold;
+        border-bottom: 2px solid #1e90ff;
+    }
+    .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.15;
+        background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><text x="10" y="40" font-size="40" fill="white">1</text><text x="10" y="80" font-size="40" fill="white">0</text></svg>') repeat;
+        animation: moveBg 5s linear infinite;
+        z-index: -1;
+    }
+    @keyframes moveBg {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-100%); }
+    }
+</style>
+</head>
+<body>
+
+<div class="header">Explore Top Coding Projects</div>
+
+<div class="project-container">
+    <div class="project-title">Python: Mad Libs Generator</div>
+    <div class="project-description">
+        A Mad Libs Generator is a fun project that brings out the whimsy of word play. Utilizing Python's string manipulation capabilities, users can create hilarious or intriguing stories based on word inputs. The project is a delightful introduction to user input, string operations, and creative coding.
+        Source: <a href="https://hackr.io" target="_blank">Hackr</a>.
+    </div>
+    <div class="project-link"><a href="https://github.com/example/mad-libs-generator" target="_blank">Source Code</a></div>
+</div>
+
+<!-- Repeat similar blocks for other projects -->
+
+<div class="project-container">
+    <div class="project-title">C++: Unreal Engine</div>
+    <div class="project-description">
+        Unreal Engine stands as a beacon of what C++ can achieve in the realm of real-time 3D graphics. This state-of-the-art game engine powers some of the most visually stunning games and simulation environments. It's a testament to the power and performance of C++ in handling complex graphical and computational tasks.
+        Source: <a href="https://unrealengine.com" target="_blank">Unreal Engine</a>.
+    </div>
+    <div class="project-link"><a href="https://github.com/EpicGames/UnrealEngine" target="_blank">Source Code</a></div>
+</div>
+
+<div class="background-animation"></div>
+
+</body>
+</html>
