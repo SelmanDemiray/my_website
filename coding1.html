@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>IT Cheat Sheet - A Treasure Trove of IT Knowledge</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+            }
+            #password-generator {
+                text-align: center;
+                padding: 50px;
+                background-color: #2c2c2c;
+                margin: auto;
+                width: 50%;
+                border: 1px solid #444;
+                border-radius: 10px;
+            }
+            textarea {
+                width: 80%;
+                height: 400px;
+                margin-bottom: 20px;
+                background-color: #333;
+                color: #fff;
+                border: 2px solid #444;
+            }
+            button {
+                background-color: #444;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body class="left-sidebar is-preload">
+        <div id="page-wrapper">
+            <!-- ... rest of your HTML ... -->
+            <div class="wrapper style1">
+                <div class="container" id="password-generator">
+                    <header>
+                        <h3>Password Generator</h3>
+                    </header>
+                    <button onclick="generatePassword()">Generate Password</button>
+                    <textarea id="passwordOutput" readonly></textarea>
+                    <p id="reminder"></p>
+                </div>
+            </div>
+            <!-- ... rest of your HTML ... -->
+            <script>
+                function generatePassword() {
+                    var length = 400;
+                    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+                    var password = '';
+                    for (var i = 0; i < length; i++) {
+                        var randomIndex = window.crypto.getRandomValues(new Uint8Array(1))[0] % characters.length;
+                        password += characters[randomIndex];
+                    }
+                    document.getElementById('passwordOutput').value = password;
+                    document.getElementById('reminder').innerText = 'Remember to change your password in 4-5 days.';
+                }
+            </script>
+        </div>
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/browser.min.js"></script>
+            <script src="assets/js/breakpoints.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <script src="assets/js/main.js"></script>
+    </body>
+</html>
