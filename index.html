@@ -12,8 +12,23 @@
 <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
 <link href="assets/css/main.css" rel="stylesheet"/>
 <noscript><link href="assets/css/noscript.css" rel="stylesheet"/></noscript>
+
+<style>
+    /* Matrix rain effect */
+    .matrix-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: -1;  // Placing it in the background
+        opacity: 0.2;  // Making it very transparent
+    }
+</style>
 </head>
 <body class="homepage is-preload">
+
+<!-- Matrix rain canvas for background -->
+<canvas id="matrix-rain-background" class="matrix-rain"></canvas>
 <div id="page-wrapper">
 <!-- Header -->
 <div id="header">
@@ -282,5 +297,48 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+    function createMatrixRain(canvasId) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext("2d");
+        
+        canvas.height = window.innerHeight;  // Now covering the entire height of the page
+        canvas.width = window.innerWidth;  // Now covering the entire width of the page
+        
+        const columns = canvas.width / 10;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.02)";  // Very transparent edges to make it subtle
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#666";  // Adjusted color to better fit the theme
+            ctx.font = "10px Arial";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(0x30 + Math.random() * 33);
+                const x = i * 10;
+                const y = drops[i] * 10;
+
+                ctx.fillText(text, x, y);
+
+                if (y >= canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+        
+        setInterval(draw, 41.25);
+    }
+
+    createMatrixRain("matrix-rain-background");
+</script>
 </body>
 </html>
