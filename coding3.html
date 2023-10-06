@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -7,37 +6,84 @@
 <title>Live Data Dashboard</title>
 <link href="styles.css" rel="stylesheet"/>
 <style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        animation: rainbowAnimation 10s linear infinite;
+        background-color: #E8F5E9; /* A relaxing green background color */
+    }
+
+    @keyframes rainbowAnimation {
+        0% {
+            background: linear-gradient(to bottom, #ff0000, #ff9900, #ffff00, #00ff00, #0000ff, #9900ff, #ff00ff);
+            background-size: 100% 800%; /* Adjust the size to create more color strips */
+            background-position: 0 0;
+        }
+        100% {
+            background: linear-gradient(to bottom, #ff0000, #ff9900, #ffff00, #00ff00, #0000ff, #9900ff, #ff00ff);
+            background-size: 100% 800%; /* Adjust the size to create more color strips */
+            background-position: 0 100%;
+        }
+    }
+
+    .navbar {
+        background-color: #2196F3; /* A calming blue background for the navbar */
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: white;
+        border: 2px solid white; /* Add a white border to the menu items */
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
     .weather-info {
         border: 1px solid #ccc;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
+        padding: 20px;
+        margin: 10px auto;
+        border-radius: 10px;
+        background-color: #FFFFFF; /* A soothing white background */
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* A subtle box shadow for the info box */
+    }
+
+    h1 {
+        color: #2196F3; /* A calming blue color for headings */
     }
 </style>
 </head>
 <body>
+<div class="navbar">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Coding Projects</a></li>
+        <li><a href="left-sidebar.html">Cheat Sheets</a></li>
+        <li><a href="interface01.html">Projects</a></li>
+        <li><a href="#">Contact (TBA)</a></li>
+    </ul>
+</div>
 <div class="data-section" id="weather-section">
-<h1>Current Weather</h1>
-<div id="weather-data"></div>
+    <div class="weather-info">
+        <h1>Current Weather</h1>
+        <div id="weather-data">
+            <!-- Your weather data content here -->
+        </div>
+    </div>
 </div>
 <script src="weather.js"></script>
-<!-- Standard Menu -->
-<nav id="nav">
-<ul>
-<li><a href="index.html">Home</a></li>
-<li>
-<a href="#">Coding Projects</a>
-<ul>
-<li><a href="coding1.html">Code 1</a></li>
-<li><a href="project2.html">Code 2</a></li>
-<li><a href="coding3.html">Code 3</a></li>
-</ul>
-</li>
-<li><a href="left-sidebar.html">Cheat Sheets</a></li>
-<li><a href="interface01.html">Projects</a></li>
-<li><a href="#">Contact (TBA)</a></li>
-</ul>
-</nav>
-<!-- End of Standard Menu -->
 </body>
 </html>
