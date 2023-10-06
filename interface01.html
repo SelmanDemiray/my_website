@@ -1,91 +1,248 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Top Coding Projects</title>
-<style>
-    body {
-        background-color: #2c2c2c;
-        color: #ffffff;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-x: hidden;
-    }
-    .header {
-        font-size: 2em;
-        margin: 20px 0;
-        color: #1e90ff;
-    }
-    .project-container {
-        background-color: #333;
-        margin: 10px 0;
-        padding: 20px;
-        border: 2px solid #444;
-        border-radius: 10px;
-        width: 80%;
-        transition: transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .project-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-    .project-title {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-        color: #1e90ff;
-    }
-    .project-description {
-        margin-bottom: 10px;
-    }
-    .project-link a {
-        color: #1e90ff;
-        text-decoration: none;
-        font-weight: bold;
-        border-bottom: 2px solid #1e90ff;
-    }
-    .background-animation {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.15;
-        background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><text x="10" y="40" font-size="40" fill="white">1</text><text x="10" y="80" font-size="40" fill="white">0</text></svg>') repeat;
-        animation: moveBg 5s linear infinite;
-        z-index: -1;
-    }
-    @keyframes moveBg {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-100%); }
-    }
-</style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+    <title>Top Coding Projects</title>
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        #wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .project-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .project {
+            width: calc(50% - 20px);
+            margin: 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .project::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+            z-index: 2;
+            border-radius: 100%;
+            animation: glowing 3s infinite linear;
+        }
+        @keyframes glowing {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* Matrix Background */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+    <script>
+        // Matrix Rain Background
+        window.addEventListener("load", function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            document.body.appendChild(canvas);
+            canvas.className = "matrix-rain";
+
+            let columns, rows;
+            const fontSize = 16;
+            let drops = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                columns = canvas.width / fontSize;
+                rows = canvas.height / fontSize;
+                drops = Array(Math.floor(columns)).fill(0);
+            }
+
+            function draw() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = fontSize + "px monospace";
+                for (let i = 0; i < drops.length; i++) {
+                    const text = String.fromCharCode(Math.floor(Math.random() * 94) + 33);
+                    const x = i * fontSize;
+                    const y = drops[i] * fontSize;
+
+                    const hue = Math.floor((y / canvas.height) * 360);
+                    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+
+                    ctx.fillText(text, x, y);
+
+                    if (y >= canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            window.addEventListener("resize", resizeCanvas);
+            resizeCanvas();
+
+            setInterval(draw, 33);
+        });
+    </script>
 </head>
 <body>
-<div class="header">Explore Top Coding Projects</div>
-<div class="project-container">
-<div class="project-title">Python: Mad Libs Generator</div>
-<div class="project-description">
-        A Mad Libs Generator is a fun project that brings out the whimsy of word play. Utilizing Python's string manipulation capabilities, users can create hilarious or intriguing stories based on word inputs. The project is a delightful introduction to user input, string operations, and creative coding.
-        Source: <a href="https://hackr.io" target="_blank">Hackr</a>.
+    <div id="wrapper">
+        <div id="main">
+            <div class="header">
+                Explore Top Coding Projects
+            </div>
+            <div class="project-container">
+            <!-- Project 1 -->
+            <div class="project">
+                <h2>Project 1: Chatbot</h2>
+                <p>A chatbot built using machine learning algorithms to assist users in various tasks.</p>
+            </div>
+            <!-- Project 2 -->
+            <div class="project">
+                <h2>Project 2: Web Scraper</h2>
+                <p>A web scraper that collects and analyzes data from multiple websites.</p>
+            </div>
+            <!-- Project 3 -->
+            <div class="project">
+                <h2>Project 3: Game Development</h2>
+                <p>A 2D game developed using Unity with C# scripting.</p>
+            </div>
+            <!-- Project 4 -->
+            <div class="project">
+                <h2>Project 4: Weather App</h2>
+                <p>An application that provides real-time weather updates using APIs.</p>
+            </div>
+            <!-- Project 5 -->
+            <div class="project">
+                <h2>Project 5: Social Media Dashboard</h2>
+                <p>A dashboard to track social media metrics and engagement.</p>
+            </div>
+            <!-- Project 6 -->
+            <div class="project">
+                <h2>Project 6: Google Map Styling</h2>
+                <p>Creating and styling a Google Map with a theme and custom marker images.</p>
+            </div>
+            <!-- Project 7 -->
+            <div class="project">
+                <h2>Project 7: Image Search App</h2>
+                <p>A simple image search application that allows the user to search for images using Unsplash’s image API.</p>
+            </div>
+            <!-- Project 8 -->
+            <div class="project">
+                <h2>Project 8: Downtime Monitoring</h2>
+                <p>An automated downtime monitoring application with alerts and uptime reports.</p>
+            </div>
+            <!-- Project 9 -->
+            <div class="project">
+                <h2>Project 9: Temperature Converter</h2>
+                <p>A simple app to convert temperatures from Celsius to Fahrenheit, and vice-versa.</p>
+            </div>
+            <!-- Project 10 -->
+            <div class="project">
+                <h2>Project 10: Food Diary App</h2>
+                <p>A mobile app to capture photos and information about what you eat.</p>
+            </div>
+            <!-- Project 11 -->
+            <div class="project">
+                <h2>Project 11: Invoice Generator</h2>
+                <p>An app that can generate, send, and receive invoices, as well as send automated follow-up reminders about overdue payments.</p>
+            </div>
+            <!-- Project 12 -->
+            <div class="project">
+                <h2>Project 12: Slack Bot</h2>
+                <p>A Slack bot that can easily keep track of your deployed websites' page speed performance within your Slack workspace.</p>
+            </div>
+            <!-- Project 13 -->
+            <div class="project">
+                <h2>Project 13: News Web Scraper</h2>
+                <p>A simple web scraper that returns the content of a news article when given a specific URL.</p>
+            </div>
+            <!-- Project 14 -->
+            <div class="project">
+                <h2>Project 14: Background Job System</h2>
+                <p>A common component in the modern workflow that can run jobs in an async fashion, reducing latency for clients.</p>
+            </div>
+            <!-- Project 15 -->
+            <div class="project">
+                <h2>Project 15: E-commerce Platform</h2>
+                <p>An online store with a user-friendly interface and secure payment options.</p>
+            </div>
+            <!-- Project 16 -->
+            <div class="project">
+                <h2>Project 16: Blogging Platform</h2>
+                <p>A platform where users can write, edit, and publish their blogs.</p>
+            </div>
+            <!-- Project 17 -->
+            <div class="project">
+                <h2>Project 17: Fitness Tracker</h2>
+                <p>An app to track your workouts, diet, and overall fitness goals.</p>
+            </div>
+            <!-- Project 18 -->
+            <div class="project">
+                <h2>Project 18: Recipe Finder</h2>
+                <p>An app where you can find recipes based on the ingredients you have.</p>
+            </div>
+            <!-- Project 19 -->
+            <div class="project">
+                <h2>Project 19: Budget Tracker</h2>
+                <p>An app to manage your income, expenses, and budget.</p>
+            </div>
+            <!-- Project 20 -->
+            <div class="project">
+                <h2>Project 20: Language Learning App</h2>
+                <p>An app to help you learn a new language through interactive lessons.</p>
+            </div>
+            <!-- Project 21 -->
+            <div class="project">
+                <h2>Project 21: Virtual Reality Experience</h2>
+                <p>A VR experience that takes you to different places around the world.</p>
+            </div>
+            <!-- Project 22 -->
+            <div class="project">
+                <h2>Project 22: Music Streaming Service</h2>
+                <p>A platform to stream your favorite music online.</p>
+            </div>
+            <!-- Project 23 -->
+            <div class="project">
+                <h2>Project 23: IoT Home Automation</h2>
+                <p>An IoT-based home automation system to control smart devices.</p>
+                <div class="project">
+                    <h2>Project 23: IoT Home Automation</h2>
+                    <p>An IoT-based home automation system to control smart devices.</p>
+                </div>
+            </div>
+        </div>
     </div>
-<div class="project-link"><a href="https://github.com/example/mad-libs-generator" target="_blank">Source Code</a></div>
-</div>
-<!-- Repeat similar blocks for other projects -->
-<div class="project-container">
-<div class="project-title">C++: Unreal Engine</div>
-<div class="project-description">
-        Unreal Engine stands as a beacon of what C++ can achieve in the realm of real-time 3D graphics. This state-of-the-art game engine powers some of the most visually stunning games and simulation environments. It's a testament to the power and performance of C++ in handling complex graphical and computational tasks.
-        Source: <a href="https://unrealengine.com" target="_blank">Unreal Engine</a>.
-    </div>
-<div class="project-link"><a href="https://github.com/EpicGames/UnrealEngine" target="_blank">Source Code</a></div>
-</div>
-<div class="background-animation"></div>
 </body>
 </html>
