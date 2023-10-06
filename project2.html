@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -29,38 +28,66 @@
   // Load images
   const earth = new Image();
   earth.src = 'earth.png';
+  const earth2 = new Image();  // New Earth image for the second Earth
+  earth2.src = 'earth.png';    // You can use the same image or a different one
   const splash = new Image();
   splash.src = 'splash.png';
 
-  let bounce = 1.66;  // Decreased bounce value for slower animation
-  let height = 0;
-  let splashTrigger = false;
+  let bounce1 = 1.66;  // Bounce value for the first Earth (downward)
+  let bounce2 = -1.66; // Bounce value for the second Earth (upward)
+  let height1 = 0;
+  let height2 = canvas.height / 2; // Start the second Earth at the middle
+  let splashTrigger1 = false;
+  let splashTrigger2 = false;
 
   function animate() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Earth
-    const earthWidth = earth.width / 6;  // Divided the Earth width by 6
-    const earthHeight = earth.height / 6;  // Divided the Earth height by 6
-    const earthX = (canvas.width - earthWidth) / 2;
-    const earthY = canvas.height - earthHeight - height;
+    // Draw First Earth
+    const earthWidth = earth.width / 6;
+    const earthHeight = earth.height / 6;
+    const earthX = (canvas.width - earthWidth) / 3;  // Adjust position
+    const earthY = canvas.height - earthHeight - height1;
     ctx.drawImage(earth, earthX, earthY, earthWidth, earthHeight);
 
-    // Draw splash
-    if (splashTrigger) {
-      const splashX = (canvas.width - splash.width) / 2;
+    // Draw Second Earth
+    const earthX2 = (canvas.width - earthWidth) * 2 / 3;  // Adjust position
+    const earthY2 = canvas.height - earthHeight - height2;
+    ctx.drawImage(earth2, earthX2, earthY2, earthWidth, earthHeight);
+
+    // Draw splash for the first Earth
+    if (splashTrigger1) {
+      const splashX = (canvas.width - splash.width) / 3;
       const splashY = canvas.height - splash.height;
       ctx.drawImage(splash, splashX, splashY, splash.width, splash.height);
-      splashTrigger = false;
+      splashTrigger1 = false;
     }
 
-    // Update height and bounce direction
-    height += bounce;
-    if (height === 25 || height === 0) {
-      bounce *= -1;
-      if (height === 0) {
-        splashTrigger = true;
+    // Draw splash for the second Earth
+    if (splashTrigger2) {
+      const splashX2 = (canvas.width - splash.width) * 2 / 3;
+      const splashY2 = canvas.height - splash.height;
+      ctx.drawImage(splash, splashX2, splashY2, splash.width, splash.height);
+      splashTrigger2 = false;
+    }
+
+    // Update heights and bounce directions
+    height1 += bounce1;
+    height2 += bounce2;
+
+    // Check for boundaries and reverse bounce direction
+    if (height1 <= 0 || height1 >= canvas.height / 2) {
+      bounce1 *= -1;
+      if (height1 <= 0) {
+        splashTrigger1 = true;
+      }
+    }
+
+    if (height2 <= 0 || height2 >= canvas.height / 2) {
+      bounce2 *= -1;
+      if (height2 <= 0) {
+        splashTrigger2 = true;
       }
     }
 
