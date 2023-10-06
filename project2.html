@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Earth Animation</title>
+<title>Animation</title>
 <style>
   body {
     margin: 0;
@@ -25,69 +25,114 @@
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  // Load images
-  const earth = new Image();
-  earth.src = 'earth.png';
-  const earth2 = new Image();  // New Earth image for the second Earth
-  earth2.src = 'earth.png';    // You can use the same image or a different one
-  const splash = new Image();
-  splash.src = 'splash.png';
+  const numLights = 50; // Number of lights
+  const lights = [];
 
-  let bounce1 = 1.66;  // Bounce value for the first Earth (downward)
-  let bounce2 = -1.66; // Bounce value for the second Earth (upward)
-  let height1 = 0;
-  let height2 = canvas.height / 2; // Start the second Earth at the middle
-  let splashTrigger1 = false;
-  let splashTrigger2 = false;
+  const numEarths = 3; // Number of Earths
+  const earths = [];
+
+  function initializeLight(lightInstance) {
+    lightInstance.radius = Math.random() * 5 + 2; // Random radius
+    lightInstance.x = Math.random() * canvas.width; // Random x position
+    lightInstance.y = Math.random() * canvas.height; // Random y position
+    lightInstance.speedX = (Math.random() * 4 - 2) * 1.5; // 50% faster horizontal speed (-3 to 3)
+    lightInstance.speedY = (Math.random() * 4 - 2) * 1.5; // 50% faster vertical speed (-3 to 3)
+    lightInstance.color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.8)`; // Random color
+  }
+
+  function initializeEarth(earthInstance, index) {
+    earthInstance.image = new Image();
+    earthInstance.image.src = 'earth.png';
+    earthInstance.radius = index === 2 ? 60 : 30; // Bigger Earth in the middle
+    earthInstance.angle = 0; // Angle for rotation
+    earthInstance.positionX = Math.random() * canvas.width; // Random initial x position
+    earthInstance.positionY = Math.random() * canvas.height; // Random initial y position
+    earthInstance.speedX = (Math.random() * 4 - 2) * 1.5; // 50% faster horizontal speed (-3 to 3)
+    earthInstance.speedY = (Math.random() * 4 - 2) * 1.5; // 50% faster vertical speed (-3 to 3)
+  }
+
+  for (let i = 0; i < numLights; i++) {
+    const lightInstance = {};
+    initializeLight(lightInstance);
+    lights.push(lightInstance);
+  }
+
+  for (let i = 0; i < numEarths; i++) {
+    const earthInstance = {};
+    initializeEarth(earthInstance, i);
+    earths.push(earthInstance);
+  }
+
+  function checkCollision(earth1, earth2) {
+    const dx = earth1.positionX - earth2.positionX;
+    const dy = earth1.positionY - earth2.positionY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < earth1.radius + earth2.radius;
+  }
 
   function animate() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw First Earth
-    const earthWidth = earth.width / 6;
-    const earthHeight = earth.height / 6;
-    const earthX = (canvas.width - earthWidth) / 3;  // Adjust position
-    const earthY = canvas.height - earthHeight - height1;
-    ctx.drawImage(earth, earthX, earthY, earthWidth, earthHeight);
+    for (const lightInstance of lights) {
+      // Draw light
+      ctx.beginPath();
+      ctx.arc(lightInstance.x, lightInstance.y, lightInstance.radius, 0, Math.PI * 2);
+      ctx.fillStyle = lightInstance.color;
+      ctx.fill();
 
-    // Draw Second Earth
-    const earthX2 = (canvas.width - earthWidth) * 2 / 3;  // Adjust position
-    const earthY2 = canvas.height - earthHeight - height2;
-    ctx.drawImage(earth2, earthX2, earthY2, earthWidth, earthHeight);
+      // Update position
+      lightInstance.x += lightInstance.speedX;
+      lightInstance.y += lightInstance.speedY;
 
-    // Draw splash for the first Earth
-    if (splashTrigger1) {
-      const splashX = (canvas.width - splash.width) / 3;
-      const splashY = canvas.height - splash.height;
-      ctx.drawImage(splash, splashX, splashY, splash.width, splash.height);
-      splashTrigger1 = false;
-    }
-
-    // Draw splash for the second Earth
-    if (splashTrigger2) {
-      const splashX2 = (canvas.width - splash.width) * 2 / 3;
-      const splashY2 = canvas.height - splash.height;
-      ctx.drawImage(splash, splashX2, splashY2, splash.width, splash.height);
-      splashTrigger2 = false;
-    }
-
-    // Update heights and bounce directions
-    height1 += bounce1;
-    height2 += bounce2;
-
-    // Check for boundaries and reverse bounce direction
-    if (height1 <= 0 || height1 >= canvas.height / 2) {
-      bounce1 *= -1;
-      if (height1 <= 0) {
-        splashTrigger1 = true;
+      // Wrap around the canvas
+      if (lightInstance.x > canvas.width + lightInstance.radius) {
+        lightInstance.x = -lightInstance.radius;
+      }
+      if (lightInstance.x < -lightInstance.radius) {
+        lightInstance.x = canvas.width + lightInstance.radius;
+      }
+      if (lightInstance.y > canvas.height + lightInstance.radius) {
+        lightInstance.y = -lightInstance.radius;
+      }
+      if (lightInstance.y < -lightInstance.radius) {
+        lightInstance.y = canvas.height + lightInstance.radius;
       }
     }
 
-    if (height2 <= 0 || height2 >= canvas.height / 2) {
-      bounce2 *= -1;
-      if (height2 <= 0) {
-        splashTrigger2 = true;
+    for (const earthInstance of earths) {
+      // Draw Earth
+      const earthWidth = earthInstance.image.width / 6;
+      const earthHeight = earthInstance.image.height / 6;
+      ctx.save();
+      ctx.translate(earthInstance.positionX, earthInstance.positionY);
+      ctx.rotate(earthInstance.angle);
+      ctx.drawImage(earthInstance.image, -earthWidth / 2, -earthHeight / 2, earthWidth, earthHeight);
+      ctx.restore();
+
+      // Update position
+      earthInstance.positionX += earthInstance.speedX;
+      earthInstance.positionY += earthInstance.speedY;
+
+      // Check for boundaries and reverse direction
+      if (earthInstance.positionX <= 0 || earthInstance.positionX >= canvas.width) {
+        earthInstance.speedX *= -1;
+      }
+      if (earthInstance.positionY <= 0 || earthInstance.positionY >= canvas.height) {
+        earthInstance.speedY *= -1;
+      }
+
+      // Check for collisions with other Earths
+      for (const otherEarth of earths) {
+        if (earthInstance !== otherEarth && checkCollision(earthInstance, otherEarth)) {
+          // Swap speeds to simulate bouncing off each other
+          const tempSpeedX = earthInstance.speedX;
+          const tempSpeedY = earthInstance.speedY;
+          earthInstance.speedX = otherEarth.speedX;
+          earthInstance.speedY = otherEarth.speedY;
+          otherEarth.speedX = tempSpeedX;
+          otherEarth.speedY = tempSpeedY;
+        }
       }
     }
 
