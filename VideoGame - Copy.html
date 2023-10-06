@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mario-Style Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('castle.png'), url('sky_background.jpg'); /* Replace sky_background.jpg with your sky image URL */
+            background-size: cover, cover;
+            background-position: bottom, top;
+            overflow: hidden;
+        }
+        #character {
+            position: absolute;
+            left: 50%;
+            bottom: 100px;
+            font-size: 72px;
+            color: #00FF00;
+            font-weight: bold;
+            transform: translateX(-50%);
+        }
+        .platform {
+            position: absolute;
+            width: 80px;
+            height: 20px;
+            background-color: #00FF00;
+            border-radius: 10px;
+        }
+        .evil {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FF0000;
+            border-radius: 50%;
+        }
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            display: none;
+        }
+        #ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #8B4513;
+        }
+        #reset-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #333;
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="character">A</div>
+    <div id="game-over">GAME OVER</div>
+    <div id="ground"></div>
+    <button id="reset-button">Reset</button>
+    
+    <script>
+        const character = document.getElementById('character');
+        const resetButton = document.getElementById('reset-button');
+        let isJumping = false;
+        let isGameOver = false;
+        let characterSpeed = 2;  // Slowed down
+        let characterJumpHeight = 150;
+        let gameInterval;
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                jump();
+            }
+        });
+
+        resetButton.addEventListener('click', () => {
+            resetGame();
+        });
+
+        let platforms = [];
+        let evils = [];
+
+        function createPlatform() {
+            const platform = document.createElement('div');
+            platform.classList.add('platform');
+            const randomY = Math.floor(Math.random() * 4) * 100 + 100;
+            platform.style.left = '100%';
+            platform.style.bottom = randomY + 'px';
+            document.body.appendChild(platform);
+            platforms.push(platform);
+        }
+
+        function createEvil() {
+            const evil = document.createElement('div');
+            evil.classList.add('evil');
+            const randomY = Math.floor(Math.random() * 4) * 100 + 100;
+            evil.style.left = '100%';
+            evil.style.bottom = randomY + 'px';
+            document.body.appendChild(evil);
+            evils.push(evil);
+        }
+
+        function moveObjects() {
+            platforms.forEach((platform, index) => {
+                const left = parseFloat(platform.style.left);
+                if (left < -100) {
+                    platforms.splice(index, 1);
+                    document.body.removeChild(platform);
+                } else {
+                    platform.style.left = (left - characterSpeed) + '%';
+                }
+            });
+
+            evils.forEach((evil, index) => {
+                const left = parseFloat(evil.style.left);
+                if (left < -100) {
+                    evils.splice(index, 1);
+                    document.body.removeChild(evil);
+                } else {
+                    evil.style.left = (left - characterSpeed) + '%';
+                }
+            });
+        }
+
+        function jump() {
+            if (!isJumping) {
+                isJumping = true;
+                const jumpHeight = 100;
+                const jumpDuration = 500;
+                const startJumpTime = Date.now();
+
+                function animateJump() {
+                    const currentTime = Date.now();
+                    const elapsedTime = currentTime - startJumpTime;
+
+                    if (elapsedTime < jumpDuration) {
+                        const jumpProgress = Math.sin((elapsedTime / jumpDuration) * Math.PI);
+                        const jumpPosition = jumpHeight * jumpProgress;
+                        character.style.bottom = (100 + jumpPosition) + 'px';
+                        requestAnimationFrame(animateJump);
+                    } else {
+                        character.style.bottom = '100px';
+                        isJumping = false;
+                    }
+                }
+
+                animateJump();
+            }
+        }
+
+        function checkCollisions() {
+            platforms.forEach((platform, index) => {
+                const characterRect = character.getBoundingClientRect();
+                const platformRect = platform.getBoundingClientRect();
+
+                if (
+                    characterRect.bottom >= platformRect.top &&
+                    characterRect.top <= platformRect.bottom &&
+                    characterRect.right >= platformRect.left &&
+                    characterRect.left <= platformRect.right
+                ) {
+                    if (characterRect.bottom <= platformRect.bottom) {
+                        character.style.bottom = platformRect.bottom + 'px';
+                        isJumping = false;
+                    }
+                }
+            });
+
+            evils.forEach((evil, index) => {
+                const characterRect = character.getBoundingClientRect();
+                const evilRect = evil.getBoundingClientRect();
+
+                if (
+                    characterRect.bottom >= evilRect.top &&
+                    characterRect.top <= evilRect.bottom &&
+                    characterRect.right >= evilRect.left &&
+                    characterRect.left <= evilRect.right
+                ) {
+                    gameOver();
+                }
+            });
+        }
+
+        function gameLoop() {
+            moveObjects();
+            checkCollisions();
+        }
+
+        function gameOver() {
+            isGameOver = true;
+            document.getElementById('game-over').style.display = 'block';
+            clearInterval(gameInterval);
+        }
+
+        function startGame() {
+            isJumping = false;
+            isGameOver = false;
+            document.getElementById('game-over').style.display = 'none';
+            character.style.bottom = '100px';
+            characterSpeed = 2;
+            characterJumpHeight = 150;
+            gameInterval = setInterval(gameLoop, 30);
+            setTimeout(() => {
+                setInterval(createPlatform, 2000);
+                setInterval(createEvil, 3000);
+            }, 2000);
+        }
+
+        function resetGame() {
+            isJumping = false;
+            isGameOver = false;
+            document.getElementById('game-over').style.display = 'none';
+            character.style.bottom = '100px';
+            platforms.forEach((platform) => {
+                document.body.removeChild(platform);
+            });
+            evils.forEach((evil) => {
+                document.body.removeChild(evil);
+            });
+            platforms = [];
+            evils = [];
+            characterSpeed = 2;
+            characterJumpHeight = 150;
+            clearInterval(gameInterval);
+            startGame();
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
