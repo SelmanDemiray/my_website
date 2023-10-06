@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mario-Style Game</title>
+    <title>Advanced Mario-Style Game</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-image: url('castle.png'), url('sky_background.jpg'); /* Replace sky_background.jpg with your sky image URL */
+            background-image: url('castle.png'), url('sky_background.jpg');
             background-size: cover, cover;
             background-position: bottom, top;
             overflow: hidden;
@@ -60,6 +60,17 @@
             border: none;
             cursor: pointer;
         }
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            color: #FFF;
+        }
     </style>
 </head>
 <body>
@@ -67,15 +78,17 @@
     <div id="game-over">GAME OVER</div>
     <div id="ground"></div>
     <button id="reset-button">Reset</button>
+    <div id="score">Score: 0</div>
     
     <script>
         const character = document.getElementById('character');
         const resetButton = document.getElementById('reset-button');
         let isJumping = false;
         let isGameOver = false;
-        let characterSpeed = 2;  // Slowed down
-        let characterJumpHeight = 150;
+        let characterSpeed = 2;
+        let characterJumpHeight = 200;  // Increased jump height
         let gameInterval;
+        let score = 0;
 
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {
@@ -83,9 +96,18 @@
             }
         });
 
+        // Mobile tap support
+        document.addEventListener('touchstart', function() {
+            jump();
+        });
+
         resetButton.addEventListener('click', () => {
             resetGame();
         });
+
+        function updateScore() {
+            document.getElementById('score').innerText = 'Score: ' + score;
+        }
 
         let platforms = [];
         let evils = [];
@@ -130,12 +152,15 @@
                     evil.style.left = (left - characterSpeed) + '%';
                 }
             });
+
+            score++;
+            updateScore();
         }
 
         function jump() {
             if (!isJumping) {
                 isJumping = true;
-                const jumpHeight = 100;
+                const jumpHeight = characterJumpHeight;  // Use the increased jump height
                 const jumpDuration = 500;
                 const startJumpTime = Date.now();
 
@@ -208,7 +233,9 @@
             document.getElementById('game-over').style.display = 'none';
             character.style.bottom = '100px';
             characterSpeed = 2;
-            characterJumpHeight = 150;
+            characterJumpHeight = 200;
+            score = 0;
+            updateScore();
             gameInterval = setInterval(gameLoop, 30);
             setTimeout(() => {
                 setInterval(createPlatform, 2000);
@@ -230,7 +257,9 @@
             platforms = [];
             evils = [];
             characterSpeed = 2;
-            characterJumpHeight = 150;
+            characterJumpHeight = 200;
+            score = 0;
+            updateScore();
             clearInterval(gameInterval);
             startGame();
         }
