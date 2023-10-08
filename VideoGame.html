@@ -195,7 +195,7 @@
                     if (elapsedTime < jumpDuration) {
                         const jumpProgress = Math.sin((elapsedTime / jumpDuration) * Math.PI);
                         const jumpPosition = jumpHeight * jumpProgress;
-                        character.style.bottom = (100 + jumpPosition) + 'px';
+                        character.style.bottom = (170 + jumpPosition) + 'px';
                         requestAnimationFrame(animateJump);
                     } else {
                         character.style.bottom = '100px';
