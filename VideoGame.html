@@ -15,9 +15,10 @@
             position: absolute;
             left: 50%;
             bottom: 100px;
-            font-size: 72px;
-            color: #00FF00;
-            font-weight: bold;
+            width: 50px;  /* Set the width */
+            height: 50px;  /* Set the height */
+            background-image: url('ID1.gif');  /* Use the GIF */
+            background-size: cover;
             transform: translateX(-50%);
         }
         .platform {
@@ -39,7 +40,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 36px;
+            font-size: 72px;
+            font-weight: bold;
+            color: red;
             display: none;
         }
         #ground {
@@ -71,32 +74,40 @@
             border-radius: 5px;
             color: #FFF;
         }
+        .enemy {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('enemy.gif');
+            background-size: cover;
+        }
     </style>
 </head>
 <body>
-    <div id="character">A</div>
+    <div id="character"></div>
     <div id="game-over">GAME OVER</div>
     <div id="ground"></div>
     <button id="reset-button">Reset</button>
     <div id="score">Score: 0</div>
-    
     <script>
         const character = document.getElementById('character');
         const resetButton = document.getElementById('reset-button');
         let isJumping = false;
         let isGameOver = false;
         let characterSpeed = 2;
-        let characterJumpHeight = 200;  // Increased jump height
+        let characterJumpHeight = 200;
         let gameInterval;
         let score = 0;
 
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {
-                jump();
+                event.preventDefault();  // Prevent default action
+                if (!isGameOver) {  // Only allow jump if the game is not over
+                    jump();
+                }
             }
         });
 
-        // Mobile tap support
         document.addEventListener('touchstart', function() {
             jump();
         });
@@ -160,7 +171,7 @@
         function jump() {
             if (!isJumping) {
                 isJumping = true;
-                const jumpHeight = characterJumpHeight;  // Use the increased jump height
+                const jumpHeight = characterJumpHeight;
                 const jumpDuration = 500;
                 const startJumpTime = Date.now();
 
@@ -216,9 +227,24 @@
             });
         }
 
+        function checkEnemyCollision() {
+            const characterRect = character.getBoundingClientRect();
+            const enemyRect = document.getElementById('newEnemy').getBoundingClientRect();
+
+            if (
+                characterRect.bottom >= enemyRect.top &&
+                characterRect.top <= enemyRect.bottom &&
+                characterRect.right >= enemyRect.left &&
+                characterRect.left <= enemyRect.right
+            ) {
+                gameOver();
+            }
+        }
+
         function gameLoop() {
             moveObjects();
             checkCollisions();
+            checkEnemyCollision();
         }
 
         function gameOver() {
@@ -265,6 +291,32 @@
         }
 
         startGame();
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const enemyElement = document.getElementById("newEnemy");
+            let enemyPosition = 0;
+
+            enemyElement.style.bottom = "100px";
+
+            function moveEnemy() {
+                enemyPosition += 2;
+                enemyElement.style.left = enemyPosition + 'px';
+
+                if (enemyPosition > window.innerWidth) {
+                    enemyPosition = -50;
+                }
+
+                requestAnimationFrame(moveEnemy);
+            }
+
+            moveEnemy();
+        });
     </script>
+    <div class="enemy" id="newEnemy"></div>
+</body>
+</html>
+
+    </script>
+    <div class="enemy" id="newEnemy"></div>
 </body>
 </html>
