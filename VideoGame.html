@@ -15,8 +15,8 @@
             position: absolute;
             left: 50%;
             bottom: 100px;
-            width: 50px;
-            height: 50px;
+            width: 100px;  /* Increased to twice the size */
+            height: 100px;  /* Increased to twice the size */
             background-image: url('ID1.gif');
             background-size: cover;
             transform: translateX(-50%);
@@ -54,7 +54,7 @@
             background-color: #8B4513;
             animation: groundColorChange 2s infinite alternate;
         }
-        #ground::before {
+        #ground::before, #ground::after {
             content: "";
             position: absolute;
             width: 10px;
@@ -63,6 +63,11 @@
             bottom: 10px;
             left: 10px;
             border-radius: 50%;
+            animation: wormMove 5s infinite alternate;
+        }
+        #ground::after {
+            left: 30px;
+            animation-delay: 2s;
         }
         #reset-button {
             position: absolute;
@@ -100,6 +105,10 @@
         @keyframes groundColorChange {
             from { background-color: #8B4513; }
             to { background-color: #A0522D; }
+        }
+        @keyframes wormMove {
+            from { bottom: 10px; }
+            to { bottom: 20px; }
         }
     </style>
 </head>
