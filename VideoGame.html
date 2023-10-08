@@ -6,7 +6,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('castle.png'), url('sky_background.jpg');
+            background-image: url('castle.gif'), url('sky_background.jpg');
             background-size: cover, cover;
             background-position: bottom, top;
             overflow: hidden;
@@ -15,9 +15,9 @@
             position: absolute;
             left: 50%;
             bottom: 100px;
-            width: 50px;  /* Set the width */
-            height: 50px;  /* Set the height */
-            background-image: url('ID1.gif');  /* Use the GIF */
+            width: 50px;
+            height: 50px;
+            background-image: url('ID1.gif');
             background-size: cover;
             transform: translateX(-50%);
         }
@@ -44,6 +44,7 @@
             font-weight: bold;
             color: red;
             display: none;
+            animation: colorChange 2s infinite alternate;
         }
         #ground {
             position: absolute;
@@ -51,6 +52,17 @@
             width: 100%;
             height: 100px;
             background-color: #8B4513;
+            animation: groundColorChange 2s infinite alternate;
+        }
+        #ground::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: darkred;
+            bottom: 10px;
+            left: 10px;
+            border-radius: 50%;
         }
         #reset-button {
             position: absolute;
@@ -80,6 +92,14 @@
             height: 50px;
             background-image: url('enemy.gif');
             background-size: cover;
+        }
+        @keyframes colorChange {
+            from { color: black; }
+            to { color: grey; }
+        }
+        @keyframes groundColorChange {
+            from { background-color: #8B4513; }
+            to { background-color: #A0522D; }
         }
     </style>
 </head>
@@ -311,6 +331,11 @@
 
             moveEnemy();
         });
+    </script>
+    <div class="enemy" id="newEnemy"></div>
+</body>
+</html>
+
     </script>
     <div class="enemy" id="newEnemy"></div>
 </body>
