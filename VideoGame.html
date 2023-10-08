@@ -15,24 +15,27 @@
             position: absolute;
             left: 50%;
             bottom: 100px;
-            width: 100px;  /* Increased to twice the size */
-            height: 100px;  /* Increased to twice the size */
+            width: 100px;
+            height: 100px;
             background-image: url('ID1.gif');
             background-size: cover;
             transform: translateX(-50%);
         }
         .platform {
             position: absolute;
-            width: 80px;
-            height: 20px;
-            background-color: #00FF00;
+            width: 320px;  /* 4 times bigger */
+            height: 80px;  /* 4 times bigger */
+            background-image: url('platform.gif');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
             border-radius: 10px;
         }
         .evil {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #FF0000;
+            width: 200px;  /* 4 times bigger */
+            height: 200px;  /* 4 times bigger */
+            background-image: url('enemy2.gif');
+            background-size: cover;
             border-radius: 50%;
         }
         #game-over {
@@ -53,21 +56,6 @@
             height: 100px;
             background-color: #8B4513;
             animation: groundColorChange 2s infinite alternate;
-        }
-        #ground::before, #ground::after {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: darkred;
-            bottom: 10px;
-            left: 10px;
-            border-radius: 50%;
-            animation: wormMove 5s infinite alternate;
-        }
-        #ground::after {
-            left: 30px;
-            animation-delay: 2s;
         }
         #reset-button {
             position: absolute;
@@ -106,10 +94,6 @@
             from { background-color: #8B4513; }
             to { background-color: #A0522D; }
         }
-        @keyframes wormMove {
-            from { bottom: 10px; }
-            to { bottom: 20px; }
-        }
     </style>
 </head>
 <body>
@@ -123,15 +107,15 @@
         const resetButton = document.getElementById('reset-button');
         let isJumping = false;
         let isGameOver = false;
-        let characterSpeed = 2;
+        let characterSpeed = 1;  /* Half the speed */
         let characterJumpHeight = 200;
         let gameInterval;
         let score = 0;
 
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {
-                event.preventDefault();  // Prevent default action
-                if (!isGameOver) {  // Only allow jump if the game is not over
+                event.preventDefault();
+                if (!isGameOver) {
                     jump();
                 }
             }
