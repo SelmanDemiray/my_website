@@ -32,8 +32,18 @@
     font-family: 'Arial', sans-serif;
     color: gold;
 }
+    border: 3px solid gold;
   </style>
- </head>
+ 
+<style>
+.icon.fa-gamepad::before {
+    content: "★";
+    color: yellow;
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+</style>
+</head>
  <body class="homepage is-preload">
   <!-- Matrix rain canvas for background -->
   <canvas class="matrix-rain" id="matrix-rain-background">
@@ -66,12 +76,17 @@
      <ul>
       <li>
        <a class="icon fa-gamepad" href="#">
-        Video Games
+        ★ Video Games
        </a>
        <ul>
         <li>
          <a href="VideoGame.html">
-          Video Game 1
+          Running Hero
+         </a>
+        </li>
+        <li>
+         <a href="Gjemi.html">
+          Gjemi - RTS
          </a>
         </li>
        </ul>
