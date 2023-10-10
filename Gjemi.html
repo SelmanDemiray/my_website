@@ -6,9 +6,23 @@
 </head>
 <body>
   <h1>RTS Game</h1>
+  
+  <div id="gameInstructions">
+    <h2>Instructions:</h2>
+    <ul>
+        <li><strong>Start:</strong> Click the 'Start' button to begin the game. You'll start with 3 gatherers.</li>
+        <li><strong>Gatherers:</strong> These units automatically collect resources. They will find the nearest resource, gather it, and bring it back to the base.</li>
+        <li><strong>Soldiers:</strong> These are your combat units. Currently, they just spawn next to the base.</li>
+        <li><strong>Resources:</strong> Resources are scattered around the map. They are essential for spawning more units. There are four types: Wood, Stone, Gold, and Food.</li>
+        <li><strong>Controls:</strong> Use W, A, S, D keys to move the map view.</li>
+        <li><strong>Objective:</strong> Gather as many resources as possible and spawn units to grow your army!</li>
+    </ul>
+  </div>
+
   <div id="startMenu">
     <button onclick="startGame()">Start</button>
   </div>
+  
   <div id="gameContainer">
     <canvas id="gameCanvas" width="3200" height="2400"></canvas>
     <div id="menu">
@@ -18,13 +32,17 @@
       <div id="soldierList">Soldiers: 0</div>
     </div>
   </div>
+  
   <div id="resourceTracker">
     <p>Wood: <span id="woodCount">0</span></p>
     <p>Stone: <span id="stoneCount">0</span></p>
     <p>Gold: <span id="goldCount">0</span></p>
     <p>Food: <span id="foodCount">0</span></p>
+    <p class="hint">Hint: Gather 3 of each resource to spawn a gatherer.</p>
   </div>
+  
   <div id="timer">Time: 0s</div>
+  
   <script src="gameLogic.js"></script>
 </body>
 </html>
