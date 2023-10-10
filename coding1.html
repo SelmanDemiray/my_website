@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML><!DOCTYPE HTML>
 
 <html>
 <head>
@@ -8,64 +8,78 @@
 <link href="assets/css/main.css" rel="stylesheet"/>
 <noscript><link href="assets/css/noscript.css" rel="stylesheet"/></noscript>
 <style>
-            body {
-                background-color: black;
-                color: white;
-            }
-            #password-generator {
-                text-align: center;
-                padding: 50px;
-                background-color: #2c2c2c;
-                margin: auto;
-                width: 50%;
-                border: 1px solid #444;
-                border-radius: 10px;
-            }
-            textarea {
-                width: 80%;
-                height: 400px;
-                margin-bottom: 20px;
-                background-color: #333;
-                color: #fff;
-                border: 2px solid #444;
-            }
-            button {
-                background-color: #444;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-        </style>
+    body {
+        background: linear-gradient(to right, #2c3e50, #3498db);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+    #password-generator {
+        text-align: center;
+        padding: 50px;
+        background-color: #2c2c2c;
+        width: 50%;
+        border: 1px solid #444;
+        border-radius: 10px;
+    }
+    textarea {
+        width: 80%;
+        height: 400px;
+        margin-bottom: 20px;
+        background-color: #333;
+        color: #fff;
+        border: 2px solid #444;
+    }
+    button {
+        background-color: #444;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px; /* Added spacing between buttons */
+    }
+</style>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
-<!-- ... rest of your HTML ... -->
 <div class="wrapper style1">
 <div class="container" id="password-generator">
 <header>
 <h3>Password Generator</h3>
 </header>
 <button onclick="generatePassword()">Generate Password</button>
+<button onclick="copyToClipboard()">Copy Password</button>
 <textarea id="passwordOutput" readonly=""></textarea>
 <p id="reminder"></p>
 </div>
 </div>
-<!-- ... rest of your HTML ... -->
 <script>
-                function generatePassword() {
-                    var length = 400;
-                    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
-                    var password = '';
-                    for (var i = 0; i < length; i++) {
-                        var randomIndex = window.crypto.getRandomValues(new Uint8Array(1))[0] % characters.length;
-                        password += characters[randomIndex];
-                    }
-                    document.getElementById('passwordOutput').value = password;
-                    document.getElementById('reminder').innerText = 'Remember to change your password in 4-5 days.';
-                }
-            </script>
+    function generatePassword() {
+        var length = 400;
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+        var password = '';
+        for (var i = 0; i < length; i++) {
+            var randomIndex = window.crypto.getRandomValues(new Uint8Array(1))[0] % characters.length;
+            password += characters[randomIndex];
+        }
+        document.getElementById('passwordOutput').value = password;
+        document.getElementById('reminder').innerText = 'Remember to change your password in 4-5 days.';
+    }
+    
+    function copyToClipboard() {
+        var passwordText = document.getElementById('passwordOutput');
+        passwordText.select();
+        passwordText.setSelectionRange(0, 99999);  // For mobile devices
+        document.execCommand("copy");
+        alert("Copied the password to clipboard!");
+    }
+</script>
+<!-- ... rest of your HTML ... -->
 </div>
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
@@ -77,18 +91,7 @@
 <nav id="nav">
 <ul>
 <li><a href="index.html">Home</a></li>
-<li>
-<a href="#">Coding Projects</a>
-<ul>
-<li><a href="coding1.html">Code 1</a></li>
-<li><a href="project2.html">Code 2</a></li>
-<li><a href="coding3.html">Code 3</a></li>
-</ul>
-</li>
-<li><a href="left-sidebar.html">Cheat Sheets</a></li>
-<li><a href="interface01.html">Projects</a></li>
-<li><a href="#">Contact (TBA)</a></li>
-</ul>
+<!-- ... rest of your HTML ... -->
 </nav>
 <!-- End of Standard Menu -->
 </body>
