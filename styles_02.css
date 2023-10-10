@@ -13,14 +13,7 @@ body, html {
   from { background: linear-gradient(to bottom, lightgrey, lightblue); }
   to { background: linear-gradient(to bottom, lightblue, lightgrey); }
 }
-#resourceTracker {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  border: 1px solid black;
-}
+
 #gameContainer {
   display: flex;
   justify-content: center;
@@ -69,4 +62,14 @@ canvas {
   right: 10px;
   font-size: 24px;
   font-weight: bold;
+}
+
+#resourceTracker {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
 }
