@@ -1,0 +1,72 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, lightgrey, lightblue);
+  animation: backgroundAnimation 5s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+  from { background: linear-gradient(to bottom, lightgrey, lightblue); }
+  to { background: linear-gradient(to bottom, lightblue, lightgrey); }
+}
+#resourceTracker {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border: 1px solid black;
+}
+#gameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  border: 1px solid black;
+  display: none;
+  width: 1600px;
+  height: 1200px;
+  background-image: url('map1.gif');
+  background-size: cover;
+}
+
+#menu {
+  position: relative;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  display: none;
+  margin-left: 20px;
+}
+
+#gathererList, #soldierList {
+  margin-top: 10px;
+}
+
+#startMenu {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#startMenu button {
+  font-size: 24px;
+  background-color: blue;
+  color: white;
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+#timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
