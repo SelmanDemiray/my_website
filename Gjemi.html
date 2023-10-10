@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>RTS Game Version 1</title>
-  <link rel="stylesheet" href="styles_02.css">
+  <link rel="stylesheet" type="text/css" href="styles_02.css">
 </head>
 <body>
   <h1>RTS Game</h1>
@@ -17,13 +17,12 @@
       <button onclick="spawnSoldier()">Spawn Soldier</button>
       <div id="soldierList"></div>
     </div>
-    <div id="resourceTracker">
-      <h3>Resources</h3>
-      <p>Wood: <span id="woodCount">0</span></p>
-      <p>Stone: <span id="stoneCount">0</span></p>
-      <p>Gold: <span id="goldCount">0</span></p>
-      <p>Food: <span id="foodCount">0</span></p>
-    </div>
+  </div>
+  <div id="resourceTracker">
+    <p>Wood: <span id="woodCount">0</span></p>
+    <p>Stone: <span id="stoneCount">0</span></p>
+    <p>Gold: <span id="goldCount">0</span></p>
+    <p>Food: <span id="foodCount">0</span></p>
   </div>
   <div id="timer"></div>
   <script src="gameLogic.js"></script>
