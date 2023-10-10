@@ -12,10 +12,10 @@
   <div id="gameContainer">
     <canvas id="gameCanvas" width="3200" height="2400"></canvas>
     <div id="menu">
-      <button onclick="spawnGatherer()">Spawn Gatherer</button>
-      <div id="gathererList"></div>
+      <button id="spawnGathererButton" onclick="spawnGatherer()" title="Gather 3 of each resource to spawn a gatherer">Spawn Gatherer</button>
+      <div id="gathererList">Gatherers: 0</div>
       <button onclick="spawnSoldier()">Spawn Soldier</button>
-      <div id="soldierList"></div>
+      <div id="soldierList">Soldiers: 0</div>
     </div>
   </div>
   <div id="resourceTracker">
@@ -24,7 +24,7 @@
     <p>Gold: <span id="goldCount">0</span></p>
     <p>Food: <span id="foodCount">0</span></p>
   </div>
-  <div id="timer"></div>
+  <div id="timer">Time: 0s</div>
   <script src="gameLogic.js"></script>
 </body>
 </html>
