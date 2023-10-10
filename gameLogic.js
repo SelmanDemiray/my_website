@@ -63,9 +63,15 @@ function startGame() {
 
     // Spawn 3 gatherers automatically next to the base
     for (let i = 0; i < 3; i++) {
-        spawnGatherer();
+        spawnInitialGatherer();
     }
 }
+function spawnInitialGatherer() {
+    const x = (3200 / 2) + gatherers.length * 15;  // Spawn next to the base
+    const y = (2400 / 2);
+    gatherers.push({ x, y, state: 'searching' });
+}
+
 
 function handleKeydown(e) {
     const speed = 50;
@@ -75,10 +81,37 @@ function handleKeydown(e) {
     if (e.key === 'd') offsetX += speed;
 }
 
+function canSpawnGatherer() {
+    return baseResources.wood >= 3 && baseResources.stone >= 3 && baseResources.gold >= 3 && baseResources.food >= 3;
+}
+
+function spawnGatherer() {
+    if (canSpawnGatherer()) {
+        baseResources.wood -= 3;
+        baseResources.stone -= 3;
+        baseResources.gold -= 3;
+        baseResources.food -= 3;
+        updateUnitLists();
+        
+        const x = (3200 / 2) + gatherers.length * 15;  // Spawn next to the base
+        const y = (2400 / 2);
+        gatherers.push({ x, y, state: 'searching' });
+    }
+}
+
 function updateUnitLists() {
     gathererList.innerHTML = 'Gatherers: ' + gatherers.length;
     soldierList.innerHTML = 'Soldiers: ' + soldiers.length;
     resourceTracker.innerHTML = `Wood: ${baseResources.wood} | Stone: ${baseResources.stone} | Gold: ${baseResources.gold} | Food: ${baseResources.food}`;
+    
+    const gathererButton = document.getElementById('spawnGathererButton');
+    if (canSpawnGatherer()) {
+        gathererButton.disabled = false;
+        gathererButton.title = "Click to spawn a gatherer";
+    } else {
+        gathererButton.disabled = true;
+        gathererButton.title = "Gather 3 of each resource to spawn a gatherer";
+    }
 }
 
 function distance(a, b) {
@@ -113,7 +146,7 @@ function gathererBehavior(g) {
         const resource = closestResource(g);
         if (resource && distance(g, resource) <= 20) {
             g.state = 'gathering';
-            g.carrying = resource.type;  // Gatherer picks up the resource
+            g.carrying = resource.type;
             setTimeout(() => {
                 resource.useCount = (resource.useCount || 0) + 1;
                 if (resource.useCount >= 5) {
@@ -126,12 +159,12 @@ function gathererBehavior(g) {
             moveTowards(g, resource);
         }
     } else if (g.state === 'returning') {
-        const base = { x: 3200 / 2, y: 2400 / 2 };  // Center of the map
-        if (distance(g, base) <= 75) {  // Increased the distance to account for the bigger base
-            baseResources[g.carrying]++;  // Add the resource to the base
-            g.carrying = null;  // Reset the gatherer's carrying state
+        const base = { x: 3200 / 2, y: 2400 / 2 };
+        if (distance(g, base) <= 75) {
+            baseResources[g.carrying]++;
+            g.carrying = null;
             g.state = 'searching';
-            updateUnitLists();  // Update the resource tracker
+            updateUnitLists();
         } else {
             moveTowards(g, base);
         }
@@ -141,22 +174,18 @@ function gathererBehavior(g) {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Base
-    ctx.drawImage(baseImg, (3200 / 2) - offsetX - 75, (2400 / 2) - offsetY - 75, 150, 150);  // Center of the map and made base 5 times bigger
+    ctx.drawImage(baseImg, (3200 / 2) - offsetX - 75, (2400 / 2) - offsetY - 75, 150, 150);
 
-    // Draw gatherers
     gatherers.forEach(g => {
         if (!g.state) g.state = 'searching';
         gathererBehavior(g);
         ctx.drawImage(gathererImg, g.x - offsetX, g.y - offsetY, 10, 10);
     });
 
-    // Draw soldiers
     soldiers.forEach(s => {
         ctx.drawImage(soldierImg, s.x - offsetX, s.y - offsetY, 10, 10);
     });
 
-    // Draw resources
     resources.forEach(r => {
         let img;
         switch (r.type) {
@@ -189,14 +218,8 @@ function updateTimer() {
     timerDiv.innerHTML = 'Time: ' + elapsedTime + 's';
 }
 
-function spawnGatherer() {
-    const x = (3200 / 2) + gatherers.length * 15;  // Spawn next to the base
-    const y = (2400 / 2);
-    gatherers.push({ x, y, state: 'searching' });
-}
-
 function spawnSoldier() {
-    const x = (3200 / 2) + soldiers.length * 15;  // Spawn next to the base
+    const x = (3200 / 2) + soldiers.length * 15;
     const y = (2400 / 2);
     soldiers.push({ x, y });
 }
