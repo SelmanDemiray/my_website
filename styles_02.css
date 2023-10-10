@@ -13,6 +13,23 @@ body, html {
   from { background: linear-gradient(to bottom, lightgrey, lightblue); }
   to { background: linear-gradient(to bottom, lightblue, lightgrey); }
 }
+#gameInstructions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+  transition: all 1s ease-in-out; /* Animation effect */
+}
+
+.gameStarted #gameInstructions {
+  top: 10%;
+  left: 85%; /* Adjust as needed to position it to the right side */
+  transform: none;
+}
 
 #gameContainer {
   display: flex;
