@@ -61,11 +61,15 @@ function startGame() {
     gameLoop();
     document.addEventListener('keydown', handleKeydown);
 
+    // Add gameStarted class to body to trigger the animation
+    document.body.classList.add('gameStarted');
+
     // Spawn 3 gatherers automatically next to the base
     for (let i = 0; i < 3; i++) {
         spawnInitialGatherer();
     }
 }
+
 function spawnInitialGatherer() {
     const x = (3200 / 2) + gatherers.length * 15;  // Spawn next to the base
     const y = (2400 / 2);
