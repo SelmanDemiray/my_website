@@ -16,13 +16,32 @@
         <li><strong>Resources:</strong> Resources are scattered around the map. They are essential for spawning more units. There are four types: Wood, Stone, Gold, and Food.</li>
         <li><strong>Controls:</strong> Use W, A, S, D keys to move the map view.</li>
         <li><strong>Objective:</strong> Gather as many resources as possible and spawn units to grow your army!</li>
+        <li><strong>Spawn Requirements:</strong>
+            <ul>
+                <li><strong>Gatherer:</strong> <strong>4 Food</strong>.</li>
+                <li><strong>Soldier:</strong> Requires <strong>5 of each resource</strong> (Wood, Stone, Gold, and Food).</li>
+            </ul>
+        </li>
     </ul>
-  </div>
+</div>
 
+  
   <div id="startMenu">
     <button onclick="startGame()">Start</button>
   </div>
-  
+  <div id="preferenceMenu">
+    <h3>Resource Preference</h3>
+    <select id="resourcePreferenceSelect">
+        <option value="">Any</option>
+        <option value="wood">Wood</option>
+        <option value="stone">Stone</option>
+        <option value="gold">Gold</option>
+        <option value="food">Food</option>
+    </select>
+    <button onclick="updateResourcePreference()">Set Preference</button>
+</div>
+
+
   <div id="gameContainer">
     <canvas id="gameCanvas" width="3200" height="2400"></canvas>
     <div id="menu">
@@ -44,5 +63,6 @@
   <div id="timer">Time: 0s</div>
   
   <script src="gameLogic.js"></script>
+  <script src="enemyAI.js"></script>
 </body>
 </html>
