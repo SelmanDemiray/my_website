@@ -71,10 +71,26 @@ function startGame() {
 }
 
 function spawnInitialGatherer() {
-    const x = (3200 / 2) + gatherers.length * 15;  // Spawn next to the base
-    const y = (2400 / 2);
-    gatherers.push({ x, y, state: 'searching' });
+    // Constants for game area dimensions and base position
+    const GAME_AREA_WIDTH = 3200;
+    const GAME_AREA_HEIGHT = 2400;
+    const BASE_POSITION_X = GAME_AREA_WIDTH / 2;
+    const BASE_POSITION_Y = GAME_AREA_HEIGHT / 2;
+    const SPACING_BETWEEN_GATHERERS = 15;
+
+    // Calculate spawn position for the new gatherer
+    const spawnX = BASE_POSITION_X + gatherers.length * SPACING_BETWEEN_GATHERERS;
+    const spawnY = BASE_POSITION_Y; // Spawn at base Y position
+
+    // Create a new gatherer object and add it to the gatherers array
+    const newGatherer = {
+        x: spawnX,
+        y: spawnY,
+        state: 'searching'
+    };
+    gatherers.push(newGatherer);
 }
+
 
 
 function handleKeydown(e) {
@@ -86,20 +102,37 @@ function handleKeydown(e) {
 }
 
 function canSpawnGatherer() {
-    return baseResources.wood >= 3 && baseResources.stone >= 3 && baseResources.gold >= 3 && baseResources.food >= 3;
+    return baseResources.food >= 4; // Only check for 4 units of food
 }
+
 
 function spawnGatherer() {
     if (canSpawnGatherer()) {
-        baseResources.wood -= 3;
-        baseResources.stone -= 3;
-        baseResources.gold -= 3;
-        baseResources.food -= 3;
+        baseResources.food -= 4; // Deduct 4 units of food
         updateUnitLists();
         
         const x = (3200 / 2) + gatherers.length * 15;  // Spawn next to the base
         const y = (2400 / 2);
         gatherers.push({ x, y, state: 'searching' });
+    }
+}
+function canSpawnSoldier() {
+    // Check if there are at least 5 units of each resource type
+    return baseResources.wood >= 5 && baseResources.stone >= 5 && baseResources.gold >= 5 && baseResources.food >= 5;
+}
+function spawnSoldier() {
+    if (canSpawnSoldier()) {
+        // Deduct 5 units of each resource
+        baseResources.wood -= 5;
+        baseResources.stone -= 5;
+        baseResources.gold -= 5;
+        baseResources.food -= 5;
+        updateUnitLists();
+
+        // Spawning logic for soldier
+        const x = (3200 / 2) + soldiers.length * 15; // Adjust spawn position if necessary
+        const y = (2400 / 2);
+        soldiers.push({ x, y }); // Add additional properties if needed
     }
 }
 
@@ -123,17 +156,15 @@ function distance(a, b) {
 }
 
 function closestResource(unit) {
-    let minDist = Infinity;
-    let closestRes = null;
-    resources.forEach(r => {
-        const dist = distance(unit, r);
-        if (dist < minDist) {
-            minDist = dist;
-            closestRes = r;
-        }
-    });
-    return closestRes;
+    let resourcesFiltered = unit.preferredResource ? resources.filter(r => r.type === unit.preferredResource) : resources;
+    if (resourcesFiltered.length === 0) resourcesFiltered = resources; // Fallback if no preferred resource is available
+
+    return resourcesFiltered.reduce((closest, resource) => {
+        const dist = distance(unit, resource);
+        return dist < distance(unit, closest) ? resource : closest;
+    }, resourcesFiltered[0]);
 }
+
 
 function moveTowards(unit, target) {
     const dx = target.x - unit.x;
@@ -214,6 +245,16 @@ function gameLoop() {
     draw();
     updateTimer();
     requestAnimationFrame(gameLoop);
+}
+function updateResourcePreference() {
+    const selectedResource = document.getElementById('resourcePreferenceSelect').value;
+    setGathererPreference(selectedResource);
+}
+function setGathererPreference(resourceType) {
+    gatherers.forEach(gatherer => {
+        gatherer.preferredResource = resourceType;
+    });
+    // Optionally, you can add code here to reflect the change in the game UI.
 }
 
 function updateTimer() {
