@@ -36,6 +36,24 @@ body, html {
   justify-content: center;
   align-items: center;
 }
+#preferenceMenu {
+  position: absolute;
+  top: 60%;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#preferenceMenu h3 {
+  margin-top: 0;
+}
+
+#resourcePreferenceSelect, #preferenceMenu button {
+  margin-top: 10px;
+  padding: 5px;
+}
 
 canvas {
   border: 1px solid black;
