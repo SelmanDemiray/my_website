@@ -59,8 +59,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             background: transparent;
+        }
+        /* Lightning Effect Styles */
+        .lightning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
         @media screen and (max-width: 768px) {
             .header {
@@ -71,53 +81,15 @@
             }
         }
     </style>
-    <script>
-        // Matrix Rain Background
-        window.addEventListener("load", function() {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            document.body.appendChild(canvas);
-            canvas.className = "matrix-rain";
-
-            let columns;
-            const fontSize = 16;
-            let drops = [];
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                columns = canvas.width / fontSize;
-                drops = Array(Math.floor(columns)).fill(0);
-            }
-
-            function draw() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = "#4cffb6";
-                ctx.font = fontSize + "px monospace";
-                for (let i = 0; i < drops.length; i++) {
-                    const text = String.fromCharCode(Math.floor(Math.random() * 128) + 128);
-                    const x = i * fontSize;
-                    const y = drops[i] * fontSize;
-                    ctx.fillText(text, x, y);
-
-                    if (y >= canvas.height && Math.random() > 0.975) drops[i] = 0;
-                    else drops[i]++;
-                }
-            }
-
-            window.addEventListener("resize", resizeCanvas);
-            resizeCanvas();
-            setInterval(draw, 33);
-        });
-    </script>
 </head>
 <body>
+    <canvas class="matrix-rain"></canvas>
+    <canvas class="lightning"></canvas>
     <div id="wrapper">
         <div id="main">
             <div class="header">Explore Top Coding Projects</div>
             <div class="project-container">
+                <!-- Project entries will go here -->
                 <!-- Project 1 -->
                 <div class="project">
                     <h2><a href="https://github.com/gunthercox/ChatterBot">Project 1: Chatbot</a></h2>
@@ -158,7 +130,7 @@
                     <h2><a href="https://github.com/healthchecks/healthchecks">Project 8: Downtime Monitoring</a></h2>
                     <p>An automated downtime monitoring application with alerts and uptime reports.</p>
                 </div>
-
+                <!-- Additional projects will continue here... -->
                 <!-- Project 9 -->
                 <div class="project">
                     <h2><a href="https://github.com/cypress-io/cypress-example-kitchensink">Project 9: Temperature Converter</a></h2>
@@ -237,6 +209,77 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>\
+</div>
+<script>
+    // Matrix Rain Background
+    const matrixCanvas = document.querySelector('.matrix-rain');
+    const mctx = matrixCanvas.getContext('2d');
+    let matrixColumns;
+    const matrixFontSize = 16;
+    let matrixDrops = [];
+
+    function resizeMatrixCanvas() {
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+        matrixColumns = matrixCanvas.width / matrixFontSize;
+        matrixDrops = Array(Math.floor(matrixColumns)).fill(0);
+    }
+
+    function drawMatrixRain() {
+        mctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+        mctx.fillStyle = "#4cffb6";
+        mctx.font = matrixFontSize + "px monospace";
+        for (let i = 0; i < matrixDrops.length; i++) {
+            const text = String.fromCharCode(Math.floor(Math.random() * 128) + 128);
+            const x = i * matrixFontSize;
+            const y = matrixDrops[i] * matrixFontSize;
+            mctx.fillText(text, x, y);
+
+            if (y >= matrixCanvas.height && Math.random() > 0.975) matrixDrops[i] = 0;
+            else matrixDrops[i]++;
+        }
+    }
+
+    window.addEventListener('resize', resizeMatrixCanvas);
+    resizeMatrixCanvas();
+    setInterval(drawMatrixRain, 33);
+
+    // Lightning Effect
+    const lightningCanvas = document.querySelector('.lightning');
+    const lctx = lightningCanvas.getContext('2d');
+
+    function resizeLightningCanvas() {
+        lightningCanvas.width = window.innerWidth;
+        lightningCanvas.height = window.innerHeight;
+    }
+
+    function drawLightning() {
+        lctx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
+        const xStart = Math.random() * lightningCanvas.width;
+        const yStart = Math.random() * lightningCanvas.height;
+        const xEnd = xStart + (Math.random() - 0.5) * 200; // Random end X-coordinate
+        const yEnd = yStart + (Math.random() - 0.5) * 200; // Random end Y-coordinate
+        const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        lctx.beginPath();
+        lctx.moveTo(xStart, yStart);
+        lctx.lineTo(xEnd, yEnd);
+        lctx.strokeStyle = color;
+        lctx.lineWidth = 2 + Math.random() * 3;
+        lctx.stroke();
+    }
+
+    function randomLightning() {
+        drawLightning();
+        setTimeout(randomLightning, 300 + Math.random() * 400); // Randomized interval for lightning strikes
+    }
+
+    window.addEventListener('resize', resizeLightningCanvas);
+    resizeLightningCanvas();
+    randomLightning();
+</script>
 </body>
 </html>
