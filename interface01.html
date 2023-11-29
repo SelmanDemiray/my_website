@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <title>Top Coding Projects</title>
+    <title>IT Cheat Sheet - A Treasure Trove of IT Knowledge</title>
     <style>
-        /* General Styles */
+        /* General Styles from your first snippet */
         body, html {
             margin: 0;
             padding: 0;
@@ -80,11 +80,57 @@
                 padding: 30px 15px;
             }
         }
+
+        /* Added styles for header and navigation from the second snippet */
+        #header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        #nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        #nav ul li {
+            margin: 0 10px;
+        }
+        #nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <canvas class="matrix-rain"></canvas>
-    <canvas class="lightning"></canvas>
+    <!-- Header and Navigation from the second snippet -->
+    <div id="header">
+        <div class="inner">
+            <header>
+                <h1><a href="index.html" id="logo">IT Cheat Sheet</a></h1>
+            </header>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="#">Coding Projects</a>
+                        <ul>
+                            <li><a href="coding1.html">Code 1</a></li>
+                            <li><a href="project2.html">Code 2</a></li>
+                            <li><a href="coding3.html">Code 3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="left-sidebar.html">Cheat Sheets</a></li>
+                    <li><a href="interface01.html">Projects</a></li>
+                    <li><a href="#">Contact (TBA)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main content area from the first snippet -->
     <div id="wrapper">
         <div id="main">
             <div class="header">Explore Top Coding Projects</div>
@@ -102,7 +148,7 @@
                 </div>
                 <!-- Project 3 -->
                 <div class="project">
-                    <h2><a href="https://github.com/Unity-Technologies/2D-Game-Kit">Project 3: Game Development</a></h2>
+                    <h2><a href="https://github.com/atmosgames/SuperSimple2DKit">Project 3: Game Development</a></h2>
                     <p>A 2D game developed using Unity with C# scripting.</p>
                 </div>
                 <!-- Project 4 -->
@@ -212,74 +258,39 @@
     </div>\
 </div>
 <script>
-    // Matrix Rain Background
-    const matrixCanvas = document.querySelector('.matrix-rain');
-    const mctx = matrixCanvas.getContext('2d');
-    let matrixColumns;
-    const matrixFontSize = 16;
-    let matrixDrops = [];
+        const matrixCanvas = document.querySelector('.matrix-rain');
+        const mctx = matrixCanvas.getContext('2d');
+        let matrixColumns;
+        const matrixFontSize = 16;
+        let matrixDrops = [];
 
-    function resizeMatrixCanvas() {
-        matrixCanvas.width = window.innerWidth;
-        matrixCanvas.height = window.innerHeight;
-        matrixColumns = matrixCanvas.width / matrixFontSize;
-        matrixDrops = Array(Math.floor(matrixColumns)).fill(0);
-    }
-
-    function drawMatrixRain() {
-        mctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-
-        mctx.fillStyle = "#4cffb6";
-        mctx.font = matrixFontSize + "px monospace";
-        for (let i = 0; i < matrixDrops.length; i++) {
-            const text = String.fromCharCode(Math.floor(Math.random() * 128) + 128);
-            const x = i * matrixFontSize;
-            const y = matrixDrops[i] * matrixFontSize;
-            mctx.fillText(text, x, y);
-
-            if (y >= matrixCanvas.height && Math.random() > 0.975) matrixDrops[i] = 0;
-            else matrixDrops[i]++;
+        function resizeMatrixCanvas() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            matrixColumns = matrixCanvas.width / matrixFontSize;
+            matrixDrops = Array(Math.floor(matrixColumns)).fill(0);
         }
-    }
 
-    window.addEventListener('resize', resizeMatrixCanvas);
-    resizeMatrixCanvas();
-    setInterval(drawMatrixRain, 33);
+        function drawMatrixRain() {
+            mctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
-    // Lightning Effect
-    const lightningCanvas = document.querySelector('.lightning');
-    const lctx = lightningCanvas.getContext('2d');
+            mctx.fillStyle = "#4cffb6";
+            mctx.font = matrixFontSize + "px monospace";
+            for (let i = 0; i < matrixDrops.length; i++) {
+                const text = String.fromCharCode(Math.floor(Math.random() * 128) + 128);
+                const x = i * matrixFontSize;
+                const y = matrixDrops[i] * matrixFontSize;
+                mctx.fillText(text, x, y);
 
-    function resizeLightningCanvas() {
-        lightningCanvas.width = window.innerWidth;
-        lightningCanvas.height = window.innerHeight;
-    }
+                if (y >= matrixCanvas.height and Math.random() > 0.975) matrixDrops[i] = 0;
+                else matrixDrops[i]++;
+            }
+        }
 
-    function drawLightning() {
-        lctx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
-        const xStart = Math.random() * lightningCanvas.width;
-        const yStart = Math.random() * lightningCanvas.height;
-        const xEnd = xStart + (Math.random() - 0.5) * 200; // Random end X-coordinate
-        const yEnd = yStart + (Math.random() - 0.5) * 200; // Random end Y-coordinate
-        const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-
-        lctx.beginPath();
-        lctx.moveTo(xStart, yStart);
-        lctx.lineTo(xEnd, yEnd);
-        lctx.strokeStyle = color;
-        lctx.lineWidth = 2 + Math.random() * 3;
-        lctx.stroke();
-    }
-
-    function randomLightning() {
-        drawLightning();
-        setTimeout(randomLightning, 300 + Math.random() * 400); // Randomized interval for lightning strikes
-    }
-
-    window.addEventListener('resize', resizeLightningCanvas);
-    resizeLightningCanvas();
-    randomLightning();
-</script>
+        window.addEventListener('resize', resizeMatrixCanvas);
+        resizeMatrixCanvas();
+        setInterval(drawMatrixRain, 33);
+    </script>
 </body>
 </html>
