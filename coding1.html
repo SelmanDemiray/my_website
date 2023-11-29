@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-
 <html>
 <head>
 <title>IT Cheat Sheet - A Treasure Trove of IT Knowledge</title>
@@ -25,26 +24,26 @@
         justify-content: center;
         height: 100vh;
         margin: 0;
-        font-size: 16px; /* Adjust font size */
+        font-size: 16px;
     }
 
     #password-generator {
         text-align: center;
-        padding: 20px; /* Adjust padding */
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-        width: 70%; /* Adjust width */
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 70%;
         border: 1px solid #444;
         border-radius: 10px;
     }
 
     textarea {
-        width: 90%; /* Adjust width */
-        height: 200px; /* Adjust height */
+        width: 90%;
+        height: 200px;
         margin-bottom: 20px;
         background-color: #333;
         color: #fff;
         border: 2px solid #444;
-        font-size: 1em; /* Adjust font size */
+        font-size: 1em;
     }
 
     button {
@@ -56,21 +55,81 @@
         cursor: pointer;
         margin-right: 10px;
     }
+
+    /* Navigation Menu Styles */
+    #nav {
+        position: relative;
+        z-index: 10;
+    }
+    #nav ul {
+        list-style: none;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    #nav ul li {
+        display: inline-block;
+        margin-right: 20px;
+        position: relative;
+    }
+    #nav ul li a {
+        text-decoration: none;
+        color: #03396c;
+    }
+    #nav ul li ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+    }
+    #nav ul li:hover > ul {
+        display: block;
+    }
+    #nav ul li ul li {
+        display: block;
+    }
 </style>
 </head>
 <body class="left-sidebar is-preload">
+
+<!-- Navigation Menu -->
+<nav id="nav">
+  <ul>
+    <li>
+      <a class="icon fa-gamepad" href="#">
+        ★ Video Games
+      </a>
+      <ul>
+        <li><a href="VideoGame.html">Running Hero</a></li>
+        <li><a href="Gjemi.html">Gjemi - RTS</a></li>
+      </ul>
+    </li>
+    <li><a href="index.html">Home</a></li>
+    <li>
+      <a href="#">Coding Projects</a>
+      <ul>
+        <li><a href="coding1.html">Code 1</a></li>
+        <li><a href="project2.html">Code 2</a></li>
+        <li><a href="coding3.html">Code 3</a></li>
+      </ul>
+    </li>
+    <li><a href="left-sidebar.html">Cheat Sheets</a></li>
+    <li><a href="interface01.html">Projects</a></li>
+    <li><a href="contact_site.html">Contact (TBA)</a></li>
+  </ul>
+</nav>
+<!-- End of Navigation Menu -->
+
 <div id="page-wrapper">
-<div class="wrapper style1">
-<div class="container" id="password-generator">
-<header>
-<h3>Password Generator</h3>
-</header>
-<button onclick="generatePassword()">Generate Password</button>
-<button onclick="copyToClipboard()">Copy Password</button>
-<textarea id="passwordOutput" readonly=""></textarea>
-<p id="reminder"></p>
+    <div class="container" id="password-generator">
+        <header>
+            <h3>Password Generator</h3>
+        </header>
+        <button onclick="generatePassword()">Generate Password</button>
+        <button onclick="copyToClipboard()">Copy Password</button>
+        <textarea id="passwordOutput" readonly=""></textarea>
+        <p id="reminder"></p>
+    </div>
 </div>
-</div>
+
 <script>
     function generatePassword() {
         var length = 400;
@@ -87,25 +146,18 @@
     function copyToClipboard() {
         var passwordText = document.getElementById('passwordOutput');
         passwordText.select();
-        passwordText.setSelectionRange(0, 99999);  // For mobile devices
+        passwordText.setSelectionRange(0, 99999);
         document.execCommand("copy");
         alert("Copied the password to clipboard!");
     }
 </script>
-<!-- ... rest of your HTML ... -->
-</div>
+
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-<!-- Standard Menu -->
-<nav id="nav">
-<ul>
-<li><a href="index.html">Home</a></li>
-<!-- ... rest of your HTML ... -->
-</nav>
-<!-- End of Standard Menu -->
+
 </body>
 </html>
