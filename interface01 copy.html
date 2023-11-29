@@ -3,42 +3,47 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <title>Top Coding Projects</title>
+    <title>IT Cheat Sheet - A Treasure Trove of IT Knowledge</title>
     <style>
-        /* General Styles */
-        :root {
-    --main-bg-color: #0e0e0e;
-    --text-color: #f0f0f0;
-    --accent-color: #4cffb6;
-    --hover-accent-color: #78ffb6;
-    --matrix-bg-color: rgba(0, 0, 0, 0.05);
-    --lightning-color: #78ffb6;
-        }
-
+        /* General Styles from your first snippet */
         body, html {
-            background-color: var(--main-bg-color);
-            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0e0e0e;
+            color: #f0f0f0;
+            overflow-x: hidden;
         }
-
+        #wrapper {
+            min-height: 100vh;
+            padding: 50px 20px;
+            box-sizing: border-box;
+        }
         .header {
-            color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-color);
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #4cffb6;
+            text-shadow: 0 0 10px #4cffb6;
         }
-
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
         .project {
-            background-color: var(--matrix-bg-color);
-            border: 1px solid var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid #4cffb6;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
-
         .project:hover {
-            border-color: var(--hover-accent-color);
+            transform: translateY(-10px);
+            border-color: #78ffb6;
         }
-
-        .background-canvas {
-            pointer-events: none;
-        }
-
         h2 {
             color: #78ffb6;
             margin-bottom: 15px;
@@ -47,8 +52,18 @@
             color: #f0f0f0;
             line-height: 1.6;
         }
-        /* Matrix and Lightning Background */
-        .background-canvas {
+        /* Matrix Background */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: transparent;
+        }
+        /* Lightning Effect Styles */
+        .lightning {
             position: fixed;
             top: 0;
             left: 0;
@@ -65,12 +80,57 @@
                 padding: 30px 15px;
             }
         }
+
+        /* Added styles for header and navigation from the second snippet */
+        #header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        #nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        #nav ul li {
+            margin: 0 10px;
+        }
+        #nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <canvas class="background-canvas" id="matrixCanvas" aria-label="Matrix Rain"></canvas>
-    <canvas class="background-canvas" id="lightningCanvas" aria-label="Lightning Effect"></canvas>
-    
+    <!-- Header and Navigation from the second snippet -->
+    <div id="header">
+        <div class="inner">
+            <header>
+                <h1><a href="index.html" id="logo">IT Cheat Sheet</a></h1>
+            </header>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="#">Coding Projects</a>
+                        <ul>
+                            <li><a href="coding1.html">Code 1</a></li>
+                            <li><a href="project2.html">Code 2</a></li>
+                            <li><a href="coding3.html">Code 3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="left-sidebar.html">Cheat Sheets</a></li>
+                    <li><a href="interface01.html">Projects</a></li>
+                    <li><a href="#">Contact (TBA)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main content area from the first snippet -->
     <div id="wrapper">
         <div id="main">
             <div class="header">Explore Top Coding Projects</div>
@@ -116,8 +176,7 @@
                     <h2><a href="https://github.com/healthchecks/healthchecks">Project 8: Downtime Monitoring</a></h2>
                     <p>An automated downtime monitoring application with alerts and uptime reports.</p>
                 </div>
-                <!-- ... Additional projects will continue here... -->
-                <!-- Projects 9 to 23 -->
+                <!-- Additional projects will continue here... -->
                 <!-- Project 9 -->
                 <div class="project">
                     <h2><a href="https://github.com/cypress-io/cypress-example-kitchensink">Project 9: Temperature Converter</a></h2>
@@ -158,6 +217,7 @@
                     <h2><a href="https://github.com/WordPress/WordPress">Project 16: Blogging Platform</a></h2>
                     <p>A platform where users can write, edit, and publish their blogs.</p>
                 </div>
+
                 <!-- Project 17 -->
                 <div class="project">
                     <h2><a href="https://github.com/databrickslabs/covid-tracker">Project 17: Fitness Tracker</a></h2>
@@ -190,142 +250,47 @@
                 </div>
                 <!-- Project 23 -->
                 <div class="project">
-                    <h
-                    <!-- ... Previous Projects ... -->
+                    <h2><a href="https://github.com/home-assistant/core">Project 23: IoT Home Automation</a></h2>
+                    <p>An IoT-based home automation system to control smart devices.</p>
+                </div>
+            </div>
+        </div>
+    </div>\
+</div>
+<script>
+        const matrixCanvas = document.querySelector('.matrix-rain');
+        const mctx = matrixCanvas.getContext('2d');
+        let matrixColumns;
+        const matrixFontSize = 16;
+        let matrixDrops = [];
 
-                    <!-- Project 24 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/heartcombo/devise">Project 24: User Authentication System</a></h2>
-                        <p>A robust user authentication system for web applications.</p>
-                    </div>
-                    <!-- Project 25 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/socketio/socket.io">Project 25: Real-time Chat Application</a></h2>
-                        <p>A real-time chat application using WebSockets for live communication.</p>
-                    </div>
-                    <!-- Project 26 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/reduxjs/redux">Project 26: State Management Library</a></h2>
-                        <p>A state management library to manage complex application states.</p>
-                    </div>
-                    <!-- Project 27 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/jekyll/jekyll">Project 27: Static Site Generator</a></h2>
-                        <p>A static site generator for personal or project websites.</p>
-                    </div>
-                    <!-- Project 28 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/Leaflet/Leaflet">Project 28: Interactive Mapping Library</a></h2>
-                        <p>A JavaScript library for mobile-friendly interactive maps.</p>
-                    </div>
-                    <!-- Project 29 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/moment/moment">Project 29: Date and Time Library</a></h2>
-                        <p>A library for parsing, validating, manipulating, and formatting dates.</p>
-                    </div>
-                    <!-- Project 30 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/opencv/opencv">Project 30: Computer Vision Library</a></h2>
-                        <p>A library focused on real-time computer vision.</p>
-                    </div>
-                    <!-- Project 31 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/pandas-dev/pandas">Project 31: Data Analysis Tool</a></h2>
-                        <p>An open-source data analysis and manipulation tool.</p>
-                    </div>
-                    <!-- Project 32 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/kubernetes/kubernetes">Project 32: Container Orchestration System</a></h2>
-                        <p>An open-source system for automating deployment, scaling, and management of containerized applications.</p>
-                    </div>
-                    <!-- Project 33 -->
-                    <div class="project">
-                        <h2><a href="https://github.com/grafana/grafana">Project 33: Observability & Monitoring Platform</a></h2>
-                        <p>A platform for querying, visualizing, and alerting on metrics and logs wherever they are stored.</p>
-                    </div>
-                </div> <!-- End of project-container -->
-            </div> <!-- End of main -->
-        </div> <!-- End of wrapper -->
-    
-        <script>
-            // Matrix Rain Background
-            const matrixCanvas = document.getElementById('matrixCanvas');
-            const mctx = matrixCanvas.getContext('2d');
-            let matrixColumns;
-            const matrixFontSize = 16;
-            let matrixDrops = [];
-    
-            function resizeMatrixCanvas() {
-                matrixCanvas.width = window.innerWidth;
-                matrixCanvas.height = window.innerHeight;
-                matrixColumns = matrixCanvas.width / matrixFontSize;
-                matrixDrops = Array(Math.floor(matrixColumns)).fill(0);
+        function resizeMatrixCanvas() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            matrixColumns = matrixCanvas.width / matrixFontSize;
+            matrixDrops = Array(Math.floor(matrixColumns)).fill(0);
+        }
+
+        function drawMatrixRain() {
+            mctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+            mctx.fillStyle = "#4cffb6";
+            mctx.font = matrixFontSize + "px monospace";
+            for (let i = 0; i < matrixDrops.length; i++) {
+                const text = String.fromCharCode(Math.floor(Math.random() * 128) + 128);
+                const x = i * matrixFontSize;
+                const y = matrixDrops[i] * matrixFontSize;
+                mctx.fillText(text, x, y);
+
+                if (y >= matrixCanvas.height and Math.random() > 0.975) matrixDrops[i] = 0;
+                else matrixDrops[i]++;
             }
-    
-            function drawMatrixRain() {
-                mctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-                mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-    
-                mctx.fillStyle = "#4cffb6";
-                mctx.font = matrixFontSize + "px monospace";
-                for (let i = 0; i < matrixDrops.length; i++) {
-                    const text = String.fromCharCode(Math.floor(Math.random() * 128) + 128);
-                    const x = i * matrixFontSize;
-                    const y = matrixDrops[i] * matrixFontSize;
-                    mctx.fillText(text, x, y);
-    
-                    if (y >= matrixCanvas.height && Math.random() > 0.975) matrixDrops[i] = 0;
-                    else matrixDrops
-                    [i]++;
-                }
-            }
+        }
 
-            // Lightning Effect Background
-            const lightningCanvas = document.getElementById('lightningCanvas');
-            const lctx = lightningCanvas.getContext('2d');
-
-            function drawLightning() {
-                lctx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
-
-                if (Math.random() > 0.995) {
-                    const startX = Math.random() * lightningCanvas.width;
-                    const startY = 0;
-                    const endX = Math.random() * lightningCanvas.width;
-                    const endY = lightningCanvas.height;
-
-                    lctx.strokeStyle = '#78ffb6';
-                    lctx.lineWidth = 2;
-                    lctx.beginPath();
-                    lctx.moveTo(startX, startY);
-                    lctx.lineTo(endX, endY);
-                    lctx.stroke();
-                }
-            }
-
-            function resizeLightningCanvas() {
-                lightningCanvas.width = window.innerWidth;
-                lightningCanvas.height = window.innerHeight;
-            }
-
-            // Event listeners for window resize
-            window.addEventListener('resize', () => {
-                resizeMatrixCanvas();
-                resizeLightningCanvas();
-            });
-
-            // Initial setup
-            resizeMatrixCanvas();
-            resizeLightningCanvas();
-
-            // Animation loop
-            function animate() {
-                drawMatrixRain();
-                drawLightning();
-                requestAnimationFrame(animate);
-            }
-
-            // Start the animation loop
-            animate();
-        </script>
-    </body>
+        window.addEventListener('resize', resizeMatrixCanvas);
+        resizeMatrixCanvas();
+        setInterval(drawMatrixRain, 33);
+    </script>
+</body>
 </html>
