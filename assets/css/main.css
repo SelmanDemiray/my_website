@@ -3136,3 +3136,14 @@ input, select, textarea {
 					}
 
 	}
+/* Add your custom styles below */
+
+.center-content {
+    text-align: center; /* Center align text for all child elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align horizontally */
+    justify-content: center; /* Center align vertically */
+    height: 100%; /* Adjust height as needed */
+}
+
