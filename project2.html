@@ -8,139 +8,152 @@
   body {
     margin: 0;
     overflow: hidden;
-    background: linear-gradient(to right, #011f4b, #03396c, #005b96); /* Cool gradient background */
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #011f4b, #03396c, #005b96);
   }
   canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  #nav {
+    position: relative;
+    z-index: 10;
+  }
+  #nav ul {
+    list-style: none;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  #nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+    position: relative;
+  }
+  #nav ul li a {
+    text-decoration: none;
+    color: #03396c;
+  }
+  #nav ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+  }
+  #nav ul li:hover > ul {
+    display: block;
+  }
+  #nav ul li ul li {
     display: block;
   }
 </style>
 </head>
 <body>
+<!-- Nav -->
+<nav id="nav">
+  <ul>
+    <li>
+      <a class="icon fa-gamepad" href="#">
+        ★ Video Games
+      </a>
+      <ul>
+        <li><a href="VideoGame.html">Running Hero</a></li>
+        <li><a href="Gjemi.html">Gjemi - RTS</a></li>
+      </ul>
+    </li>
+    <li><a href="index.html">Home</a></li>
+    <li>
+      <a href="#">Coding Projects</a>
+      <ul>
+        <li><a href="coding1.html">Code 1</a></li>
+        <li><a href="project2.html">Code 2</a></li>
+        <li><a href="coding3.html">Code 3</a></li>
+      </ul>
+    </li>
+    <li><a href="left-sidebar.html">Cheat Sheets</a></li>
+    <li><a href="interface01.html">Projects</a></li>
+    <li><a href="contact_site.html">Contact (TBA)</a></li>
+  </ul>
+</nav>
+<!-- End of Nav -->
+
 <canvas id="canvas"></canvas>
 <script>
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-
-  // Set canvas dimensions
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const numLights = 50; // Number of lights
-  const lights = [];
+  let earths = [];
+  const maxEarths = 2000;
 
-  const numEarths = 3; // Number of Earths
-  const earths = [];
+  class Earth {
+    constructor() {
+      this.initialize();
+    }
 
-  function initializeLight(lightInstance) {
-    lightInstance.radius = Math.random() * 5 + 2; // Random radius
-    lightInstance.x = Math.random() * canvas.width; // Random x position
-    lightInstance.y = Math.random() * canvas.height; // Random y position
-    lightInstance.speedX = (Math.random() * 4 - 2) * 1.5; // 50% faster horizontal speed (-3 to 3)
-    lightInstance.speedY = (Math.random() * 4 - 2) * 1.5; // 50% faster vertical speed (-3 to 3)
-    lightInstance.color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.8)`; // Random color
+    initialize() {
+      this.radius = 30;
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.speedX = (Math.random() * 4 - 2) * 1.5;
+      this.speedY = (Math.random() * 4 - 2) * 1.5;
+      this.image = new Image();
+      this.image.src = 'earth.png';
+    }
+
+    draw() {
+      ctx.drawImage(this.image, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
+        this.speedX *= -1;
+      }
+      if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
+        this.speedY *= -1;
+      }
+    }
   }
 
-  function initializeEarth(earthInstance, index) {
-    earthInstance.image = new Image();
-    earthInstance.image.src = 'earth.png';
-    earthInstance.radius = index === 2 ? 60 : 30; // Bigger Earth in the middle
-    earthInstance.angle = 0; // Angle for rotation
-    earthInstance.positionX = Math.random() * canvas.width; // Random initial x position
-    earthInstance.positionY = Math.random() * canvas.height; // Random initial y position
-    earthInstance.speedX = (Math.random() * 4 - 2) * 1.5; // 50% faster horizontal speed (-3 to 3)
-    earthInstance.speedY = (Math.random() * 4 - 2) * 1.5; // 50% faster vertical speed (-3 to 3)
-  }
-
-  for (let i = 0; i < numLights; i++) {
-    const lightInstance = {};
-    initializeLight(lightInstance);
-    lights.push(lightInstance);
-  }
-
-  for (let i = 0; i < numEarths; i++) {
-    const earthInstance = {};
-    initializeEarth(earthInstance, i);
-    earths.push(earthInstance);
+  function addEarth() {
+    if (earths.length < maxEarths) {
+      earths.push(new Earth());
+    }
   }
 
   function checkCollision(earth1, earth2) {
-    const dx = earth1.positionX - earth2.positionX;
-    const dy = earth1.positionY - earth2.positionY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    return distance < earth1.radius + earth2.radius;
+    const dx = earth1.x - earth2.x;
+    const dy = earth1.y - earth2.y;
+    return Math.sqrt(dx * dx + dy * dy) < earth1.radius + earth2.radius;
   }
 
-  function animate() {
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (const lightInstance of lights) {
-      // Draw light
-      ctx.beginPath();
-      ctx.arc(lightInstance.x, lightInstance.y, lightInstance.radius, 0, Math.PI * 2);
-      ctx.fillStyle = lightInstance.color;
-      ctx.fill();
-
-      // Update position
-      lightInstance.x += lightInstance.speedX;
-      lightInstance.y += lightInstance.speedY;
-
-      // Wrap around the canvas
-      if (lightInstance.x > canvas.width + lightInstance.radius) {
-        lightInstance.x = -lightInstance.radius;
-      }
-      if (lightInstance.x < -lightInstance.radius) {
-        lightInstance.x = canvas.width + lightInstance.radius;
-      }
-      if (lightInstance.y > canvas.height + lightInstance.radius) {
-        lightInstance.y = -lightInstance.radius;
-      }
-      if (lightInstance.y < -lightInstance.radius) {
-        lightInstance.y = canvas.height + lightInstance.radius;
-      }
-    }
-
-    for (const earthInstance of earths) {
-      // Draw Earth
-      const earthWidth = earthInstance.image.width / 6;
-      const earthHeight = earthInstance.image.height / 6;
-      ctx.save();
-      ctx.translate(earthInstance.positionX, earthInstance.positionY);
-      ctx.rotate(earthInstance.angle);
-      ctx.drawImage(earthInstance.image, -earthWidth / 2, -earthHeight / 2, earthWidth, earthHeight);
-      ctx.restore();
-
-      // Update position
-      earthInstance.positionX += earthInstance.speedX;
-      earthInstance.positionY += earthInstance.speedY;
-
-      // Check for boundaries and reverse direction
-      if (earthInstance.positionX <= 0 || earthInstance.positionX >= canvas.width) {
-        earthInstance.speedX *= -1;
-      }
-      if (earthInstance.positionY <= 0 || earthInstance.positionY >= canvas.height) {
-        earthInstance.speedY *= -1;
-      }
-
-      // Check for collisions with other Earths
-      for (const otherEarth of earths) {
-        if (earthInstance !== otherEarth && checkCollision(earthInstance, otherEarth)) {
-          // Swap speeds to simulate bouncing off each other
-          const tempSpeedX = earthInstance.speedX;
-          const tempSpeedY = earthInstance.speedY;
-          earthInstance.speedX = otherEarth.speedX;
-          earthInstance.speedY = otherEarth.speedY;
-          otherEarth.speedX = tempSpeedX;
-          otherEarth.speedY = tempSpeedY;
+  function multiplyEarthOnCollision() {
+    for (let i = 0; i < earths.length; i++) {
+      for (let j = i + 1; j < earths.length; j++) {
+        if (checkCollision(earths[i], earths[j])) {
+          addEarth();
+          addEarth();
         }
       }
     }
+  }
 
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    multiplyEarthOnCollision();
+    earths.forEach(earth => {
+      earth.update();
+      earth.draw();
+    });
     requestAnimationFrame(animate);
   }
 
+  addEarth(); // Start with one earth
   animate();
-
 </script>
 </body>
 </html>
