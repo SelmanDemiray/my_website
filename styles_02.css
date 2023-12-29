@@ -8,6 +8,18 @@ body, html {
   background: linear-gradient(to bottom, lightgrey, lightblue);
   animation: backgroundAnimation 5s infinite alternate;
 }
+#miniMapCanvas {
+  position: absolute;
+  bottom: 10px;
+  left: 10px; /* Bottom left position */
+  border: 1px solid black;
+  z-index: 1000;
+  display: block;
+  width: 268px; /* New width */
+  height: 200px; /* New height */
+}
+
+
 
 @keyframes backgroundAnimation {
   from { background: linear-gradient(to bottom, lightgrey, lightblue); }
@@ -57,11 +69,14 @@ body, html {
 
 canvas {
   border: 1px solid black;
-  display: none;
   width: 1600px;
   height: 1200px;
   background-image: url('map1.gif');
   background-size: cover;
+}
+
+#gameCanvas {
+  display: none; /* Hide only the main game canvas initially */
 }
 
 #menu {
