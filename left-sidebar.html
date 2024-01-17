@@ -6,9 +6,18 @@
     <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
     <link href="assets/css/main.css" rel="stylesheet"/>
     <noscript><link href="assets/css/noscript.css" rel="stylesheet"/></noscript>
+    <style>
+        .container, #content, section {
+            text-align: center; 
+            margin: auto;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body class="left-sidebar is-preload">
-<div id="page-wrapper">
+    <div id="page-wrapper">
     <!-- Header -->
     <div id="header">
         <!-- Inner -->
@@ -44,12 +53,15 @@
             </ul>
         </nav>
     </div>
-    <!-- Main -->
-    <div class="wrapper style1">
-        <div class="container">
-            <div class="row gtr-200">
-                <div class="col-8 col-12-mobile imp-mobile" id="content">
-                    <article id="main">
+
+        <!-- Main -->
+        <div class="wrapper style1">
+            <div class="container">
+                <div class="row gtr-200">
+                    <div class="col-8 col-12-mobile imp-mobile" id="content">
+                        <article id="main">
+                            <!-- Existing Sections: Programming, Networking, Security, Databases -->
+                            <!-- Content as originally provided -->
                         <!-- Programming Section -->
                         <section id="programming">
                             <header style="text-align: center;">
@@ -101,6 +113,70 @@
                             <ul>
                                 <li><a href="https://www.postgresql.org/docs/" target="_blank">PostgreSQL Documentation</a> - A tome of ancient database wisdom, unveiling the secrets of one of the most potent open-source relational database systems.</li>
                                 <li><a href="https://dev.mysql.com/doc/" target="_blank">MySQL Documentation</a> - The official scrolls of MySQL, a widely-used open-source relational database system, guiding you through its intricacies and capabilities.</li>
+                            </ul>
+                        </section>
+
+                        <!-- New Section 1: Data Science and Analytics -->
+                        <section id="data-science">
+                            <header style="text-align: center;">
+                                <h3>Data Science and Analytics</h3>
+                            </header>
+                            <p>Dive into the world of Data Science and Analytics, where vast amounts of data are transformed into actionable insights. This section covers the full spectrum of data analysis, including data mining, statistical analysis, predictive modeling, and machine learning. Discover tools and techniques to extract meaningful information from complex datasets and drive decision-making.</p>
+                            <ul>
+                                <li><a href="https://www.tableau.com/" target="_blank">Tableau</a> - Learn about data visualization techniques using Tableau.</li>
+                                <li><a href="https://www.r-project.org/" target="_blank">The R Project</a> - Explore the R language for statistical computing and graphics.</li>
+                                <li><a href="https://www.python.org/" target="_blank">Python</a> - Python's role in data analysis and its popular libraries like Pandas and NumPy.</li>
+                            </ul>
+                        </section>
+
+                        <!-- New Section 2: Internet of Things (IoT) -->
+                        <section id="iot">
+                            <header style="text-align: center;">
+                                <h3>Internet of Things (IoT)</h3>
+                            </header>
+                            <p>Explore the Internet of Things (IoT), a network of interconnected devices that communicate and exchange data. Delve into IoT architecture, platforms, and applications across various industries. Understand the challenges and opportunities in IoT, including security concerns, edge computing, and the integration of AI for smart device automation and analytics.</p>
+                            <ul>
+                                <li><a href="https://iot-analytics.com/" target="_blank">IoT Analytics</a> - Insights into IoT market trends and analysis.</li>
+                                <li><a href="https://www.arm.com/solutions/iot" target="_blank">ARM IoT Solutions</a> - ARM's approach to enabling IoT technologies.</li>
+                                <li><a href="https://aws.amazon.com/iot/" target="_blank">AWS IoT</a> - Amazon Web Services' IoT solutions and services.</li>
+                            </ul>
+                        </section>
+
+                        <!-- New Section 3: DevOps and Agile Methodologies -->
+                        <section id="devops">
+                            <header style="text-align: center;">
+                                <h3>DevOps and Agile Methodologies</h3>
+                            </header>
+                            <p>Delve into the practices of DevOps and Agile methodologies, focusing on continuous integration, continuous delivery, and rapid, collaborative development. Understand the principles of Agile project management and how they intertwine with DevOps practices to improve software development lifecycle, from coding and deployment to maintenance and updates. Learn about tools and cultural changes essential for implementing DevOps and Agile in organizations.</p>
+                            <ul>
+                                <li><a href="https://www.jenkins.io/" target="_blank">Jenkins</a> - Discover Jenkins for continuous integration and delivery.</li>
+                                <li><a href="https://www.atlassian.com/agile" target="_blank">Atlassian Agile Resources</a> - Learn about Agile project management with Atlassian's resources.</li>
+                                <li><a href="https://www.docker.com/" target="_blank">Docker</a> - Explore Docker and its role in containerization within DevOps.</li>
+                            </ul>
+                        </section>
+
+                        <!-- New Section 4: Blockchain and Cryptocurrencies -->
+                        <section id="blockchain">
+                            <header style="text-align: center;">
+                                <h3>Blockchain and Cryptocurrencies</h3>
+                            </header>
+                            <p>Uncover the revolutionary world of blockchain technology and its most famous application, cryptocurrencies. This section delves into the fundamentals of blockchain, smart contracts, and decentralized applications (dApps). Learn about different cryptocurrencies, their use cases, and the impact they have on digital transactions and asset management.</p>
+                            <ul>
+                                <li><a href="https://www.blockchain.com/" target="_blank">Blockchain.com</a> - Learn about blockchain technology and its applications.</li>
+                                <li><a href="https://ethereum.org/" target="_blank">Ethereum</a> - Discover Ethereum's platform for smart contracts and dApps.</li>
+                                <li><a href="https://bitcoin.org/" target="_blank">Bitcoin</a> - Understand Bitcoin and its role as a pioneering cryptocurrency.</li>
+                            </ul>
+                        </section>
+                        <!-- New Section 5: AR and VR Technologies -->
+                        <section id="ar-vr">
+                            <header style="text-align: center;">
+                                <h3>Augmented Reality (AR) and Virtual Reality (VR)</h3>
+                            </header>
+                            <p>Step into the immersive worlds of Augmented Reality (AR) and Virtual Reality (VR). Explore how these technologies are reshaping entertainment, education, and industry, creating interactive and engaging experiences. Understand the hardware and software powering AR and VR, and the potential these technologies hold for the future.</p>
+                            <ul>
+                                <li><a href="https://www.oculus.com/" target="_blank">Oculus VR</a> - Explore Oculus's range of VR headsets and experiences.</li>
+                                <li><a href="https://www.magicleap.com/" target="_blank">Magic Leap</a> - Discover Magic Leap's innovations in AR technology.</li>
+                                <li><a href="https://unity.com/solutions/real-time-3d" target="_blank">Unity Real-Time 3D Development</a> - Learn about developing AR/VR applications using Unity.</li>
                             </ul>
                         </section>
                     </article>
