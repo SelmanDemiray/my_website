@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Earth Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #data-container { margin-top: 20px; white-space: pre-wrap; }
+        .image { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>NASA API Data</h1>
+    <button id="fetch-data">Fetch Data</button>
+    <div id="data-container"></div>
+
+    <script>
+        document.getElementById('fetch-data').addEventListener('click', function() {
+            const apiKey = "iZloVihdhS9uhCgTOWxFErFuvYQqYfne8g6ebGsU";
+            const startDate = new Date(2024, 0, 10); // Start from January 10, 2024
+            const endDate = new Date(2024, 0, 17); // End at January 17, 2024
+            const dateArray = getDatesArray(startDate, endDate);
+
+            dateArray.forEach(date => {
+                fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const container = document.getElementById('data-container');
+                        container.innerHTML += `<h3>${data.title} (${data.date})</h3>`;
+                        if(data.media_type === 'image') {
+                            container.innerHTML += `<img src="${data.url}" class="image" width="500px"><br>`;
+                        }
+                        container.innerHTML += `<p>${data.explanation}</p><hr>`;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            });
+        });
+
+        function getDatesArray(start, end) {
+            for(var arr=[],dt=start; dt<=end; dt.setDate(dt.getDate()+1)){
+                arr.push(new Date(dt).toISOString().split('T')[0]);
+            }
+            return arr;
+        }
+    </script>
+</body>
+</html>
