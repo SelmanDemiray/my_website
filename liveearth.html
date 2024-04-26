@@ -3,47 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Earth Data</title>
+    <title>NASA Daily Images</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #data-container { margin-top: 20px; white-space: pre-wrap; }
-        .image { margin-top: 10px; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .fetch-button {
+            background-color: #0084ff;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .fetch-button:hover {
+            background-color: #0056b3;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            display: none;
+        }
+
+        .data-container {
+            margin-top: 20px;
+        }
+
+        .article {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .article img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .article h3 {
+            margin-top: 0;
+            color: #0044cc;
+        }
+
+        .article p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: #ddd;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>NASA API Data</h1>
-    <button id="fetch-data">Fetch Data</button>
-    <div id="data-container"></div>
-
+    <header>
+        <h1>NASA Daily Images</h1>
+    </header>
+    <main>
+        <button id="fetch-data" class="fetch-button">Fetch Data</button>
+        <div id="loading" class="loading">Loading...</div>
+        <section id="data-container" class="data-container"></section>
+    </main>
     <script>
         document.getElementById('fetch-data').addEventListener('click', function() {
             const apiKey = "iZloVihdhS9uhCgTOWxFErFuvYQqYfne8g6ebGsU";
-            const startDate = new Date(2023, 0, 10); // Start from January 10, 2024
+            const startDate = new Date(2023, 0, 10); // Start from January 10, 2023
             const endDate = new Date(2024, 0, 17); // End at January 17, 2024
             const dateArray = getDatesArray(startDate, endDate);
+            const loadingIndicator = document.getElementById('loading');
+            loadingIndicator.style.display = 'block';
+            this.disabled = true; // Disable the button to prevent multiple requests
 
-            dateArray.forEach(date => {
-                fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const container = document.getElementById('data-container');
-                        container.innerHTML += `<h3>${data.title} (${data.date})</h3>`;
-                        if(data.media_type === 'image') {
-                            container.innerHTML += `<img src="${data.url}" class="image" width="500px"><br>`;
-                        }
-                        container.innerHTML += `<p>${data.explanation}</p><hr>`;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                    });
+            fetchAllData(dateArray, apiKey).then(dataResponses => {
+                updateDOM(dataResponses);
+                loadingIndicator.style.display = 'none';
+                this.disabled = false; // Re-enable the button
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('data-container').innerHTML = '<p>Error loading data. Please try again later.</p>';
+                loadingIndicator.style.display = 'none';
+                this.disabled = false;
             });
         });
 
         function getDatesArray(start, end) {
-            for(var arr=[],dt=start; dt<=end; dt.setDate(dt.getDate()+1)){
+            const arr = [];
+            for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
                 arr.push(new Date(dt).toISOString().split('T')[0]);
             }
             return arr;
+        }
+
+        async function fetchAllData(dateArray, apiKey) {
+            const fetchPromises = dateArray.map(date =>
+                fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`)
+                .then(response => response.json())
+            );
+            return Promise.all(fetchPromises);
+        }
+
+        function updateDOM(data) {
+            const container = document.getElementById('data-container');
+            container.innerHTML = ''; // Clear previous contents
+            data.forEach(item => {
+                if (!item || item.code) { // Check if the item is undefined or contains an error code
+                    console.error('No data or error for this date:', item);
+                    return;
+                }
+                const article = document.createElement('div');
+                article.className = 'article';
+                article.innerHTML = `<h3>${item.title || 'No title available'} (${item.date || 'No date available'})</h3>`;
+                if (item.media_type === 'image' && item.url) {
+                    article.innerHTML += `<img src="${item.url}" alt="${item.title || 'NASA Image'}"><br>`;
+                }
+                article.innerHTML += `<p>${item.explanation || 'No explanation available'}</p><hr>`;
+                container.appendChild(article);
+            });
         }
     </script>
 </body>
