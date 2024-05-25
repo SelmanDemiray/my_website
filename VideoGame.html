@@ -1,100 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Mario-Style Game</title>
     <style>
         body {
-    margin: 0;
-    padding: 0;
-    background-image: url('castle.gif'), url('sky_background.jpg');
-    background-size: cover, cover;
-    background-position: bottom, top;
-    overflow: hidden;
-}
-#character {
-    position: absolute;
-    left: 50%;
-    bottom: 100px;
-    width: 100px;
-    height: 100px;
-    background-image: url('ID1.gif');
-    background-size: cover;
-    transform: translateX(-50%);
-}
-.platform {
-    position: absolute;
-    width: 320px;  /* 4 times bigger */
-    height: 80px;  /* 4 times bigger */
-    background-image: url('platform.gif');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-}
-.evil {
-    position: absolute;
-    width: 200px;  /* 4 times bigger */
-    height: 200px;  /* 4 times bigger */
-    background-image: url('enemy2.gif');
-    background-size: cover;
-    border-radius: 50%;
-}
-#game-over {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 72px;
-    font-weight: bold;
-    color: red;
-    display: none;
-    animation: colorChange 2s infinite alternate;
-}
-#ground {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 100px;
-    background-color: #8B4513;
-    animation: groundColorChange 2s infinite alternate;
-}
-#reset-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 15px 30px;
-    font-size: 20px;
-    background-color: #333;
-    color: #FFF;
-    border: none;
-    cursor: pointer;
-}
-#score {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 5px;
-    color: #FFF;
-}
-.enemy {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('enemy.gif');
-    background-size: cover;
-}
-@keyframes colorChange {
-    from { color: black; }
-    to { color: grey; }
-}
-@keyframes groundColorChange {
-    from { background-color: #8B4513; }
-    to { background-color: #A0522D; }
-}
-
+            margin: 0;
+            padding: 0;
+            background-image: url('castle.gif'), url('sky_background.jpg');
+            background-size: cover, cover;
+            background-position: bottom, top;
+            overflow: hidden;
+        }
+        #character {
+            position: absolute;
+            left: 50%;
+            bottom: 100px;
+            width: 100px;
+            height: 100px;
+            background-image: url('ID1.gif');
+            background-size: cover;
+            transform: translateX(-50%);
+        }
+        .platform {
+            position: absolute;
+            width: 320px;
+            height: 80px;
+            background-image: url('platform.gif');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            border-radius: 10px;
+        }
+        .evil {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-image: url('enemy2.gif');
+            background-size: cover;
+            border-radius: 50%;
+        }
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            font-weight: bold;
+            color: red;
+            display: none;
+            animation: colorChange 2s infinite alternate;
+        }
+        #ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #8B4513;
+            animation: groundColorChange 2s infinite alternate;
+        }
+        #reset-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #333;
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+        }
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            color: #FFF;
+        }
+        @keyframes colorChange {
+            from { color: black; }
+            to { color: grey; }
+        }
+        @keyframes groundColorChange {
+            from { background-color: #8B4513; }
+            to { background-color: #A0522D; }
+        }
     </style>
 </head>
 <body>
@@ -105,236 +99,207 @@
     <div id="score">Score: 0</div>
     <div class="enemy" id="newEnemy"></div>
     <script>
-        const character = document.getElementById('character');
-const resetButton = document.getElementById('reset-button');
-let isJumping = false;
-let isGameOver = false;
-let characterSpeed = 1;  /* Half the speed */
-let characterJumpHeight = 200;
-let gameInterval;
-let score = 0;
-
-document.addEventListener('keydown', function(event) {
-    if (event.code === 'Space') {
-        event.preventDefault();
-        if (!isGameOver) {
-            jump();
-        }
-    }
-});
-
-document.addEventListener('touchstart', function() {
-    jump();
-});
-
-resetButton.addEventListener('click', () => {
-    resetGame();
-});
-
-function updateScore() {
-    document.getElementById('score').innerText = 'Score: ' + score;
-}
-
-let platforms = [];
-let evils = [];
-
-function createPlatform() {
-    const platform = document.createElement('div');
-    platform.classList.add('platform');
-    const randomY = Math.floor(Math.random() * 4) * 100 + 100;
-    platform.style.left = '100%';
-    platform.style.bottom = randomY + 'px';
-    document.body.appendChild(platform);
-    platforms.push(platform);
-}
-
-function createEvil() {
-    const evil = document.createElement('div');
-    evil.classList.add('evil');
-    const randomY = Math.floor(Math.random() * 4) * 100 + 100;
-    evil.style.left = '100%';
-    evil.style.bottom = randomY + 'px';
-    document.body.appendChild(evil);
-    evils.push(evil);
-}
-
-function moveObjects() {
-    platforms.forEach((platform, index) => {
-        const left = parseFloat(platform.style.left);
-        if (left < -100) {
-            platforms.splice(index, 1);
-            document.body.removeChild(platform);
-        } else {
-            platform.style.left = (left - characterSpeed) + '%';
-        }
-    });
-
-    evils.forEach((evil, index) => {
-        const left = parseFloat(evil.style.left);
-        if (left < -100) {
-            evils.splice(index, 1);
-            document.body.removeChild(evil);
-        } else {
-            evil.style.left = (left - characterSpeed) + '%';
-        }
-    });
-
-    score++;
-    updateScore();
-}
-
-function jump() {
-    if (!isJumping) {
-        isJumping = true;
-        const jumpHeight = characterJumpHeight;
-        const jumpDuration = 500;
-        const startJumpTime = Date.now();
-
-        function animateJump() {
-            const currentTime = Date.now();
-            const elapsedTime = currentTime - startJumpTime;
-
-            if (elapsedTime < jumpDuration) {
-                const jumpProgress = Math.sin((elapsedTime / jumpDuration) * Math.PI);
-                const jumpPosition = jumpHeight * jumpProgress;
-                character.style.bottom = (170 + jumpPosition) + 'px';
-                requestAnimationFrame(animateJump);
-            } else {
-                character.style.bottom = '100px';
-                isJumping = false;
-            }
-        }
-
-        animateJump();
-    }
-}
-
-function checkCollisions() {
-    platforms.forEach((platform, index) => {
-        const characterRect = character.getBoundingClientRect();
-        const platformRect = platform.getBoundingClientRect();
-
-        if (
-            characterRect.bottom >= platformRect.top &&
-            characterRect.top <= platformRect.bottom &&
-            characterRect.right >= platformRect.left &&
-            characterRect.left <= platformRect.right
-        ) {
-            if (characterRect.bottom <= platformRect.bottom) {
-                character.style.bottom = platformRect.bottom + 'px';
-                isJumping = false;
-            }
-        }
-    });
-
-    evils.forEach((evil, index) => {
-        const characterRect = character.getBoundingClientRect();
-        const evilRect = evil.getBoundingClientRect();
-
-        if (
-            characterRect.bottom >= evilRect.top &&
-            characterRect.top <= evilRect.bottom &&
-            characterRect.right >= evilRect.left &&
-            characterRect.left <= evilRect.right
-        ) {
-            gameOver();
-        }
-    });
-}
-
-function checkEnemyCollision() {
-    const characterRect = character.getBoundingClientRect();
-    const enemyRect = document.getElementById('newEnemy').getBoundingClientRect();
-
-    if (
-        characterRect.bottom >= enemyRect.top &&
-        characterRect.top <= enemyRect.bottom &&
-        characterRect.right >= enemyRect.left &&
-        characterRect.left <= enemyRect.right
-    ) {
-        gameOver();
-    }
-}
-
-function gameLoop() {
-    moveObjects();
-    checkCollisions();
-    checkEnemyCollision();
-}
-
-function gameOver() {
-    isGameOver = true;
-    document.getElementById('game-over').style.display = 'block';
-    clearInterval(gameInterval);
-}
-
-function startGame() {
-    isJumping = false;
-    isGameOver = false;
-    document.getElementById('game-over').style.display = 'none';
-    character.style.bottom = '100px';
-    characterSpeed = 2;
-    characterJumpHeight = 200;
-    score = 0;
-    updateScore();
-    gameInterval = setInterval(gameLoop, 30);
-    setTimeout(() => {
-        setInterval(createPlatform, 2000);
-        setInterval(createEvil, 3000);
-    }, 2000);
-}
-
-function resetGame() {
-    isJumping = false;
-    isGameOver = false;
-    document.getElementById('game-over').style.display = 'none';
-    character.style.bottom = '100px';
-    platforms.forEach((platform) => {
-        document.body.removeChild(platform);
-    });
-    evils.forEach((evil) => {
-        document.body.removeChild(evil);
-    });
-    platforms = [];
-    evils = [];
-    characterSpeed = 2;
-    characterJumpHeight = 200;
-    score = 0;
-    updateScore();
-    clearInterval(gameInterval);
-    startGame();
-}
-
-startGame();
-
-document.addEventListener("DOMContentLoaded", function() {
-    const enemyElement = document.getElementById("newEnemy");
-    let enemyPosition = 0;
-
-    enemyElement.style.bottom = "100px";
-
-    function moveEnemy() {
-        enemyPosition += 2;
-        enemyElement.style.left = enemyPosition + 'px';
-
-        if (enemyPosition > window.innerWidth) {
-            enemyPosition = -50;
-        }
-
-        requestAnimationFrame(moveEnemy);
-    }
-
-    moveEnemy();
-});
-
-        /* ... (all your existing JavaScript remains the same) ... */
-
-        // Add this at the end of your script
         document.addEventListener("DOMContentLoaded", function() {
+            const character = document.getElementById('character');
+            const resetButton = document.getElementById('reset-button');
             const enemyElement = document.getElementById("newEnemy");
+            let isJumping = false;
+            let isGameOver = false;
+            let characterSpeed = 1;  /* Half the speed */
+            let characterJumpHeight = 200;
+            let gameInterval;
+            let score = 0;
+            let platforms = [];
+            let evils = [];
             let enemyPosition = 0;
 
-            enemyElement.style.bottom = "100px";
+            function updateScore() {
+                document.getElementById('score').innerText = 'Score: ' + score;
+            }
+
+            function createPlatform() {
+                const platform = document.createElement('div');
+                platform.classList.add('platform');
+                const randomY = Math.floor(Math.random() * 4) * 100 + 100;
+                platform.style.left = '100%';
+                platform.style.bottom = randomY + 'px';
+                document.body.appendChild(platform);
+                platforms.push(platform);
+            }
+
+            function createEvil() {
+                const evil = document.createElement('div');
+                evil.classList.add('evil');
+                const randomY = Math.floor(Math.random() * 4) * 100 + 100;
+                evil.style.left = '100%';
+                evil.style.bottom = randomY + 'px';
+                document.body.appendChild(evil);
+                evils.push(evil);
+            }
+
+            function moveObjects() {
+                platforms.forEach((platform, index) => {
+                    const left = parseFloat(platform.style.left);
+                    if (left < -100) {
+                        platforms.splice(index, 1);
+                        document.body.removeChild(platform);
+                    } else {
+                        platform.style.left = (left - characterSpeed) + '%';
+                    }
+                });
+
+                evils.forEach((evil, index) => {
+                    const left = parseFloat(evil.style.left);
+                    if (left < -100) {
+                        evils.splice(index, 1);
+                        document.body.removeChild(evil);
+                    } else {
+                        evil.style.left = (left - characterSpeed) + '%';
+                    }
+                });
+
+                score++;
+                updateScore();
+            }
+
+            function jump() {
+                if (!isJumping) {
+                    isJumping = true;
+                    const jumpHeight = characterJumpHeight;
+                    const jumpDuration = 500;
+                    const startJumpTime = Date.now();
+
+                    function animateJump() {
+                        const currentTime = Date.now();
+                        const elapsedTime = currentTime - startJumpTime;
+
+                        if (elapsedTime < jumpDuration) {
+                            const jumpProgress = Math.sin((elapsedTime / jumpDuration) * Math.PI);
+                            const jumpPosition = jumpHeight * jumpProgress;
+                            character.style.bottom = (170 + jumpPosition) + 'px';
+                            requestAnimationFrame(animateJump);
+                        } else {
+                            character.style.bottom = '100px';
+                            isJumping = false;
+                        }
+                    }
+
+                    animateJump();
+                }
+            }
+
+            function checkCollisions() {
+                platforms.forEach((platform) => {
+                    const characterRect = character.getBoundingClientRect();
+                    const platformRect = platform.getBoundingClientRect();
+
+                    if (
+                        characterRect.bottom >= platformRect.top &&
+                        characterRect.top <= platformRect.bottom &&
+                        characterRect.right >= platformRect.left &&
+                        characterRect.left <= platformRect.right
+                    ) {
+                        if (characterRect.bottom <= platformRect.bottom) {
+                            character.style.bottom = platformRect.bottom + 'px';
+                            isJumping = false;
+                        }
+                    }
+                });
+
+                evils.forEach((evil) => {
+                    const characterRect = character.getBoundingClientRect();
+                    const evilRect = evil.getBoundingClientRect();
+
+                    if (
+                        characterRect.bottom >= evilRect.top &&
+                        characterRect.top <= evilRect.bottom &&
+                        characterRect.right >= evilRect.left &&
+                        characterRect.left <= evilRect.right
+                    ) {
+                        gameOver();
+                    }
+                });
+            }
+
+            function checkEnemyCollision() {
+                const characterRect = character.getBoundingClientRect();
+                const enemyRect = enemyElement.getBoundingClientRect();
+
+                if (
+                    characterRect.bottom >= enemyRect.top &&
+                    characterRect.top <= enemyRect.bottom &&
+                    characterRect.right >= enemyRect.left &&
+                    characterRect.left <= enemyRect.right
+                ) {
+                    gameOver();
+                }
+            }
+
+            function gameLoop() {
+                moveObjects();
+                checkCollisions();
+                checkEnemyCollision();
+            }
+
+            function gameOver() {
+                isGameOver = true;
+                document.getElementById('game-over').style.display = 'block';
+                clearInterval(gameInterval);
+            }
+
+            function startGame() {
+                isJumping = false;
+                isGameOver = false;
+                document.getElementById('game-over').style.display = 'none';
+                character.style.bottom = '100px';
+                characterSpeed = 2;
+                characterJumpHeight = 200;
+                score = 0;
+                updateScore();
+                gameInterval = setInterval(gameLoop, 30);
+                setTimeout(() => {
+                    setInterval(createPlatform, 2000);
+                    setInterval(createEvil, 3000);
+                }, 2000);
+            }
+
+            function resetGame() {
+                isJumping = false;
+                isGameOver = false;
+                document.getElementById('game-over').style.display = 'none';
+                character.style.bottom = '100px';
+                platforms.forEach((platform) => {
+                    document.body.removeChild(platform);
+                });
+                evils.forEach((evil) => {
+                    document.body.removeChild(evil);
+                });
+                platforms = [];
+                evils = [];
+                characterSpeed = 2;
+                characterJumpHeight = 200;
+                score = 0;
+                updateScore();
+                clearInterval(gameInterval);
+                startGame();
+            }
+
+            resetButton.addEventListener('click', () => {
+                resetGame();
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'Space') {
+                    event.preventDefault();
+                    if (!isGameOver) {
+                        jump();
+                    }
+                }
+            });
+
+            document.addEventListener('touchstart', function() {
+                jump();
+            });
 
             function moveEnemy() {
                 enemyPosition += 2;
@@ -348,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             moveEnemy();
+            startGame();
         });
     </script>
 </body>
