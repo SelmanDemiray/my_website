@@ -1,700 +1,421 @@
 <!DOCTYPE HTML>
-
-<!--
-	Helios by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
-<title>
-   Welcome
-  </title>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
-<link href="assets/css/main.css" rel="stylesheet"/>
-<noscript>
-<link href="assets/css/noscript.css" rel="stylesheet"/>
-</noscript>
+<title>Welcome</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link href="assets/css/main.css" rel="stylesheet" />
+<noscript><link href="assets/css/noscript.css" rel="stylesheet" /></noscript>
 <style>
-   /* Matrix rain effect */
-    .matrix-rain {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: -1;  // Placing it in the background
-        opacity: 0.2;  // Making it very transparent
-    }
-  </style>
-<style>
-   .icon.fa-gamepad {
-    font-weight: bold;
-    font-family: 'Arial', sans-serif;
-    color: gold;
-}
-    border: 3px solid gold;
-  </style>
-<style>
-.icon.fa-gamepad::before {
-    content: "★";
-    color: yellow;
-    font-size: 1.2em;
-    margin-right: 5px;
-}
-</style>
-<style>
-.matrix-rain {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 1;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    color: white;
-    overflow: hidden;
-}
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function(event) { 
-    const canvas = document.getElementById("matrix-rain-canvas");
-    const context = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = 300;
-
-    const columns = canvas.width / 20;
-    const drops = [];
-
-    
-        for(let i = 0; i < columns; i++) {
-            drops[i] = -Math.floor(Math.random() * 1000);
-            setTimeout(function() {  // Introduce a delay for each column's start
-                drops[i] += fontSize;
-            }, i * 50);  // A staggered delay for each column
-        }
-        
-        drops[i] = 1;
-    }
-
-    function drawMatrix() {
-        context.fillStyle = "rgba(255, 255, 255, 0.04)";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        context.fillStyle = "#FFF";
-        context.font = "20px 'Courier New'";
-
-        for(let i = 0; i < drops.length; i++) {
-            const text = String.fromCharCode(Math.floor(Math.random() * 93) + 33);
-            context.fillText(text, i * 20, drops[i] * 20);
-
-            if(drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-
-            drops[i]++;
-        }
-    }
-
-    setInterval(drawMatrix, 33);
-});
-</script>
-<style>
-#nav .matrix-rain {
-    position: absolute;
+  /* Matrix rain effect */
+  .matrix-rain {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-}
+    pointer-events: none;
+    z-index: -1; 
+    opacity: 0.2; 
+  }
+
+  .icon.fa-gamepad {
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    color: gold;
+  }
+
+  .icon.fa-gamepad::before {
+    content: "★";
+    color: yellow;
+    font-size: 1.2em;
+    margin-right: 5px;
+  }
+
+  /* Mobile-friendly Navigation */
+  #nav { 
+    position: relative;
+  }
+
+  #nav ul {
+    display: none; /* Hide the menu by default on smaller screens */
+  }
+
+  #nav .toggle { /* Style for the hamburger icon */
+    display: block; /* Show the toggle on smaller screens */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  #nav .toggle .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px 0;
+  }
+
+  /* Show the menu when the toggle is clicked/activated */
+  #nav.active ul { 
+    display: block; 
+    position: absolute;
+    top: 50px; 
+    right: 0;
+    width: 100%; 
+    background-color: #222; 
+  }
+
+  /* Style the menu for mobile */
+  #nav.active li {
+    display: block; 
+    text-align: center; 
+    margin: 10px 0; 
+  }
+
+  /* Carousel Styling */
+  .carousel {
+    position: relative; /* To position navigation buttons */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Snap to carousel items */
+  }
+
+  .carousel .reel {
+    display: flex;
+    width: fit-content; /* Allow the reel to expand */
+  }
+
+  .carousel .reel article {
+    scroll-snap-align: start; /* Snap to the start of each item */
+    min-width: 80vw; /* Adjust as needed for mobile */
+    margin-right: 20px; /* Spacing between items */
+  }
+
+  .carousel-navigation {
+    position: absolute;
+    bottom: 10px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    display: flex;
+  }
+
+  .carousel-navigation button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin: 0 5px;
+  }
 </style>
-<script>
-document.addEventListener("DOMContentLoaded", function(event) { 
-    const canvas = document.getElementById("matrix-rain-canvas");
-    const context = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = 300;
-
-    const columns = canvas.width / 20;
-    const drops = [];
-
-    
-        for(let i = 0; i < columns; i++) {
-            drops[i] = -Math.floor(Math.random() * 1000);
-            setTimeout(function() {  // Introduce a delay for each column's start
-                drops[i] += fontSize;
-            }, i * 50);  // A staggered delay for each column
-        }
-        
-        drops[i] = 1;
-    }
-
-    function drawMatrix() {
-        context.fillStyle = "rgba(255, 255, 255, 0.04)";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        context.fillStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
-        context.font = "20px 'Courier New'";
-
-        for(let i = 0; i < drops.length; i++) {
-            const text = String.fromCharCode(Math.floor(Math.random() * 93) + 33);
-            context.fillText(text, i * 20, drops[i] * 20);
-
-            if(drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-
-            drops[i]++;
-        }
-    }
-
-    setInterval(drawMatrix, 33);
-});
-</script>
 </head>
 <body class="homepage is-preload">
-<!-- Matrix rain canvas for background -->
-<canvas class="matrix-rain" id="matrix-rain-background">
-</canvas>
+
+<canvas class="matrix-rain" id="matrix-rain-canvas"></canvas> 
+
 <div id="page-wrapper">
-<!-- Header -->
-<div id="header">
-<!-- Inner -->
-<div class="inner">
-<header>
-<h1>
-<a href="index.html" id="logo">
-        Welcome
-       </a>
-</h1>
-<hr/>
-<p>
-       Selman Demiray's website
-      </p>
-</header>
-<footer>
-<a class="button circled scrolly" href="#banner">
-       Start
-      </a>
-</footer>
-</div>
-<!-- Nav -->
-<!-- Standard Menu -->
-<nav id="nav">
-<ul>
-<li>
-<a class="icon fa-gamepad" href="#">
-    ★ Video Games
-       </a>
-<ul>
-<li>
-<a href="VideoGame.html">
-      Running Hero
-     </a>
-</li>
-<li>
-<a href="Gjemi.html">
-      Gjemi - RTS
-     </a>
-</li>
-</ul>
-</li>
-<li>
-<a href="liveearth.html" style="text-decoration: underline; font-weight: bold; transition: color 0.5s;">
-    Live Earth
-</a>
-</li>
-<a href="index.html">
-    Home
-       </a>
-</li>
-<li>
-<a href="#">
-    Coding Projects
-       </a>
-<ul>
-<li>
-<a href="coding1.html">
-      Code 1
-     </a>
-</li>
-<li>
-<a href="project2.html">
-      Code 2
-     </a>
-</li>
-<li>
-<a href="coding3.html">
-      Code 3
-     </a>
-</li>
-</ul>
-</li>
-<li>
-<a href="left-sidebar.html">
-    Cheat Sheets
-       </a>
-</li>
-<li>
-<a href="interface01.html">
-    Projects
-       </a>
-</li>
-<li>
-<a href="contact_site.html">
-    Contact (TBA)
-       </a>
-</li>
-</ul>
-</nav>
-<!-- End of Standard Menu -->
-</div>
-<!-- Banner -->
-<section id="banner">
-<header>
-<h2>
-      Hi. You're looking at my website
-     </h2>
-<p>
-      AWS, Azure, and CCNA prep
-      <a href="http://html5up.net">
-</a>
-<a href="http://html5up.net/license">
-</a>
-</p>
-</header>
-</section>
-<!-- Carousel -->
-<section class="carousel">
-    <div class="reel">
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic01.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        AWS: Standard Reserved Instances vs Convertible Reserved Instances
-                    </a>
-                </h3>
-            </header>
-            <p>
-                Standard reserved instances offer a significant discount compared to convertible instances. However, convertible instances can be exchanged for a different family of instances.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic02.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        AWS CloudTrail
-                    </a>
-                </h3>
-            </header>
-            <p>
-                CloudTrail is a service that enables auditing, governing, and compliance of an AWS account. With CloudTrail, you can continuously monitor and retain account information.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic03.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        Amazon FSx for Windows File Server
-                    </a>
-                </h3>
-            </header>
-            <p>
-                Provides a managed Microsoft Windows file server backed with a fully native Windows file system.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic04.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        CCNA: TCP
-                    </a>
-                </h3>
-            </header>
-            <p>
-                TCP sends transmissions in sequence, uses a lower transmission rate to ensure reliability, and transmits packets as a stream.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic05.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        CCNA: UDP
-                    </a>
-                </h3>
-            </header>
-            <p>
-                UDP transmissions include an 8-byte header, transmit packets individually, and use a higher transmission rate to support latency-sensitive applications.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic06.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        CCNA: IPv6 Unique Local Address
-                    </a>
-                </h3>
-            </header>
-            <p>
-                An IPv6 unique local address is an address in the FC00::/7 block, which means that IPv6 unique local addresses begin with 7 bits of 1111 110.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic07.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        Capital Expense (CapEx) vs Operating Expense (OpEx) in the Cloud
-                    </a>
-                </h3>
-            </header>
-            <p>
-                CapEx is an up-front investment and is usually non-recurring. OpEx has no up-front investment, usually involving recurring costs.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic08.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        Microsoft Azure
-                    </a>
-                </h3>
-            </header>
-            <p>
-                Azure works well with other Microsoft products because it is based on Microsoft technologies. Companies at an enterprise level should consider this when deploying hundreds to thousands of Windows-operated devices to their employees.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic09.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        The Growth of Cloud Gaming
-                    </a>
-                </h3>
-            </header>
-            <p>
-                The global cloud gaming market is projected to grow from $2.38 billion in 2022 to $8.17 billion in 2025, driven by increased investment and advances in internet infrastructure.
-            </p>
-        </article>
-        <article>
-            <a class="image featured" href="#">
-                <img alt="" src="images/pic10.jpg"/>
-            </a>
-            <header>
-                <h3>
-                    <a href="#">
-                        AI as a Service (AIaaS)
-                    </a>
-                </h3>
-            </header>
-            <p>
-                AIaaS is becoming more prevalent, allowing businesses without extensive resources or expertise to access AI tools through cloud providers, driving significant growth in the AI sector.
-            </p>
-        </article>
+
+  <div id="header">
+    <div class="inner">
+      <header>
+        <h1><a href="index.html" id="logo">Welcome</a></h1>
+        <hr />
+        <p>Selman Demiray's website</p>
+      </header>
+      <footer>
+        <a class="button circled scrolly" href="#banner">Start</a>
+      </footer>
     </div>
-</section>
+  </div>
 
-<!-- Main -->
-<div class="wrapper style2">
-<article class="container special" id="main">
-<a class="image featured" href="#">
-<img alt="" src="images/pic200.jpg"/>
-</a>
-<header>
-<h2>
-<a href="#">
-        Importance of DevOps in programming
-       </a>
-</h2>
-<p>
-       Definition. DevOps (a portmanteau of “development” and “operations”) is the combination of 
-                                practices and tools designed to increase an organization's ability to deliver applications 
-                                and services faster than traditional software development processes. - Synopsys.com 
-                                (https://www.synopsys.com/glossary/what-is-devops.html)
-      </p>
-</header>
-<p>
-      DevOps can be best explained as people working together to conceive, build and deliver secure software at top speed. DevOps practices enable software development (dev) and operations (ops) teams to accelerate delivery through automation, collaboration, fast feedback, and iterative improvement.
-
-                            Stemming from an Agile approach to software development, a DevOps process expands on the cross-functional approach of building and shipping applications in a faster and more iterative manner. In adopting a DevOps development process, you are making a decision to improve the flow and value delivery of your application by encouraging a more collaborative environment at all stages of the development cycle.
-
-                            DevOps represents a change in mindset for IT culture. In building on top of Agile, lean practices, and systems theory, DevOps focuses on incremental development and rapid delivery of software. Success relies on the ability to create a culture of accountability, improved collaboration, empathy, and joint responsibility for business outcomes.
-                            - https://about.gitlab.com/topics/devops/
-     </p>
-<footer>
-<a class="button" href="#">
-       Continue Reading
-      </a>
-</footer>
-</article>
-</div>
-<!-- Features -->
-<div class="wrapper style1">
-<section class="container special" id="features">
-<header>
-<h2>Resources</h2>
-<p>Useful links to important documents in IT</p>
-</header>
-<div class="row">
-<article class="col-4 col-12-mobile special">
-<a class="image featured" href="#">
-<img alt="" src="images/pic56767677.jpg"/>
-</a>
-<header>
-<h3>
-<a href="https://www.bell-labs.com/usr/dmr/www/chist.pdf">
-The Development of the C Language
-</a>
-</h3>
-</header>
-<p>
-This document by Dennis M. Ritchie explains the history of the C programming language, which is widely used and considered fundamental in computer science.
-</p>
-</article>
-<article class="col-4 col-12-mobile special">
-<a class="image featured" href="#">
-<img alt="" src="images/pic45768.jpg"/>
-</a>
-<header>
-<h3>
-<a href="https://arxiv.org/ftp/arxiv/papers/1904/1904.08239.pdf">
-Happiness and the Productivity of Software Engineers
-</a>
-</h3>
-</header>
-<p>
-This paper provides an overview of studies on the happiness of software developers, highlighting the importance of their well-being and its impact on productivity.
-</p>
-</article>
-<article class="col-4 col-12-mobile special">
-<a class="image featured" href="#">
-<img alt="" src="images/pic21212121212121212.jpg"/>
-</a>
-<header>
-<h3>
-<a href="https://github.com/papers-we-love/papers-we-love/blob/main/api_design/api-design.pdf">
-What are APIs?
-</a>
-</h3>
-</header>
-<p>
-This document explains what application programming interfaces (APIs) are, providing a comprehensive overview of their design and usage in software development.
-</p>
-</article>
-</div>
-</section>
-</div>
-
-<!-- Footer -->
-<div id="footer">
-<div class="container">
-<div class="row">
-<!-- Posts -->
-<section class="col-12">
-<header>
-<h2 class="icon solid fa-file circled">
-<span class="label">
-          Posts
-         </span>
-</h2>
-</header>
-<ul class="divided">
-<li>
-<article class="post stub">
-<header>
-<h3>
-<a href="#">
-             Proramming language: Ruby
-            </a>
-</h3>
-</header>
-<span>
-           https://chrisseaton.com/phd/specialising-ruby.pdf
-          </span>
-</article>
-</li>
-<li>
-<article class="post stub">
-<header>
-<h3>
-<a href="#">
-             Proramming language: Java
-            </a>
-</h3>
-</header>
-<span>
-           https://www.stroustrup.com/1995_Java_whitepaper.pdf
-          </span>
-</article>
-</li>
-<li>
-<article class="post stub">
-<header>
-<h3>
-<a href="#">
-             Proramming language: Go
-            </a>
-</h3>
-</header>
-<span>
-           https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.6297&amp;rep=rep1&amp;type=pdf
-          </span>
-</article>
-</li>
-<li>
-<article class="post stub">
-<header>
-<h3>
-<a href="#">
-             Proramming language: C++
-            </a>
-</h3>
-</header>
-<span>
-           https://www.stroustrup.com/oopsla.pdf
-          </span>
-</article>
-</li>
-</ul>
-</section>
-<!-- Contact Section -->
-<section class="col-12">
-    <div class="center-content"> <!-- Start of center-content div -->
-        <header>
-            <h3>Contact</h3>
-        </header>
-        <p style="text-align: center;">Email: SelmanDemiray@outlook.com</p> <!-- Centered email -->
-        <ul class="icons" style="text-align: center;">
-            <li>
-                <a class="icon brands fa-linkedin-in" href="https://www.linkedin.com/in/selman-demiray-6ab44a110">
-                    <span class="label">Linkedin</span>
-                </a>
-            </li>
-            <li>
-                <a class="icon brands fa-github" href="https://github.com/SelmanDemiray">
-                    <span class="label">GitHub</span>
-                </a>
-            </li>
+  <nav id="nav">
+    <div class="toggle"> 
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul>
+      <li>
+        <a class="icon fa-gamepad" href="#">★ Video Games</a>
+        <ul>
+          <li><a href="VideoGame.html">Running Hero</a></li>
+          <li><a href="Gjemi.html">Gjemi - RTS</a></li>
         </ul>
-    </div> <!-- End of center-content div -->
-</section>
+      </li>
+      <li>
+        <a href="liveearth.html">Live Earth</a> 
+      </li>
+      <li><a href="index.html">Home</a></li> 
+      <li>
+        <a href="#">Coding Projects</a>
+        <ul>
+          <li><a href="coding1.html">Project 1: Data Analysis with Python</a></li> 
+          <li><a href="project2.html">Project 2: Web App Development with React</a></li> 
+          <li><a href="coding3.html">Project 3: Machine Learning with TensorFlow</a></li> 
+        </ul>
+      </li>
+      <li><a href="left-sidebar.html">Cheat Sheets</a></li>
+      <li><a href="interface01.html">Projects</a></li>
+      <li><a href="contact_site.html">Contact</a></li> 
+    </ul>
+  </nav>
 
-<!-- Remaining content after the Contact section -->
-</div>
-<hr/>
-<div class="row">
-    <div class="col-12">
-        <!-- Copyright -->
-        <div class="copyright">
-            <ul class="menu">
-                <li><a href="https://www.linkedin.com/in/selman-demiray-6ab44a110"></a></li>
-            </ul>
-        </div>
+  <section id="banner">
+    <header>
+      <h2>Hi. You're looking at my website</h2>
+      <p>AWS, Azure, and CCNA prep</p> 
+    </header>
+  </section>
+
+  <section class="carousel">
+    <div class="reel">
+      <article>
+        <a class="image featured" href="#">
+          <img alt="AWS Reserved Instances" src="images/pic01.jpg" /> 
+        </a>
+        <header>
+          <h3><a href="#">AWS: Standard Reserved Instances vs Convertible Reserved Instances</a></h3>
+        </header>
+        <p>Standard reserved instances offer a significant discount compared to convertible instances. However, convertible instances can be exchanged for a different family of instances.</p>
+      </article>
+      <article>
+        <a class="image featured" href="#">
+          <img alt="AWS CloudTrail" src="images/pic02.jpg" /> 
+        </a>
+        <header>
+          <h3><a href="#">AWS CloudTrail</a></h3>
+        </header>
+        <p>CloudTrail is a service that enables auditing, governing, and compliance of an AWS account...</p>
+      </article>
+      <article>
+        <a class="image featured" href="#">
+          <img alt="Amazon FSx for Windows File Server" src="images/pic03.jpg" /> 
+        </a>
+        <header>
+          <h3><a href="#">Amazon FSx for Windows File Server</a></h3>
+        </header>
+        <p>Provides a managed Microsoft Windows file server backed with a fully native Windows file system.</p>
+      </article>
+      </div>
+    <div class="carousel-navigation"> 
+      <button class="prev">Previous</button>
+      <button class="next">Next</button>
     </div>
-</div>
-<!-- Copyright -->
-<div class="copyright">
-<ul class="menu">
-<li>
-         </li>
-<li>
-         
-          <a href="https://www.linkedin.com/in/selman-demiray-6ab44a110">
+  </section>
+
+  <div class="wrapper style2">
+    <article class="container special" id="main">
+      <a class="image featured" href="devops-article.html"> 
+        <img alt="DevOps Importance" src="images/pic200.jpg" /> 
+      </a>
+      <header>
+        <h2><a href="devops-article.html">Importance of DevOps in programming</a></h2> 
+        <p>
+          Definition. DevOps (a portmanteau of “development” and “operations”) is the combination of practices and tools designed to increase an organization's ability to deliver applications and services faster than traditional software development processes. - Synopsys.com
+          (<a href="https://www.synopsys.com/glossary/what-is-devops.html">https://www.synopsys.com/glossary/what-is-devops.html</a>)
+        </p>
+      </header>
+      <p>
+        DevOps can be best explained as people working together to conceive, build and deliver secure software at top speed... 
+      </p>
+      <footer>
+        <a class="button" href="devops-article.html">Continue Reading</a> 
+      </footer>
+    </article>
+  </div>
+
+  <div class="wrapper style1">
+    <section class="container special" id="features">
+      <header>
+        <h2>Resources</h2>
+        <p>Useful links to important documents in IT</p>
+      </header>
+      <div class="row">
+        <article class="col-4 col-12-mobile special">
+          <a class="image featured" href="https://www.bell-labs.com/usr/dmr/www/chist.pdf"> 
+            <img alt="C Language Development" src="images/pic56767677.jpg" /> 
           </a>
-</li>
-</ul>
+          <header>
+            <h3><a href="https://www.bell-labs.com/usr/dmr/www/chist.pdf">The Development of the C Language</a></h3>
+          </header>
+          <p>This document by Dennis M. Ritchie explains the history of the C programming language...</p>
+        </article>
+        <article class="col-4 col-12-mobile special">
+          <a class="image featured" href="https://arxiv.org/ftp/arxiv/papers/1904/1904.08239.pdf"> 
+            <img alt="Happiness and Productivity of Software Engineers" src="images/pic45768.jpg" /> 
+          </a>
+          <header>
+            <h3><a href="https://arxiv.org/ftp/arxiv/papers/1904/1904.08239.pdf">Happiness and the Productivity of Software Engineers</a></h3>
+          </header>
+          <p>This paper provides an overview of studies on the happiness of software developers...</p>
+        </article>
+        <article class="col-4 col-12-mobile special">
+          <a class="image featured" href="https://github.com/papers-we-love/papers-we-love/blob/main/api_design/api-design.pdf"> 
+            <img alt="What are APIs?" src="images/pic21212121212121212.jpg" /> 
+          </a>
+          <header>
+            <h3><a href="https://github.com/papers-we-love/papers-we-love/blob/main/api_design/api-design.pdf">What are APIs?</a></h3>
+          </header>
+          <p>This document explains what application programming interfaces (APIs) are...</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <div id="footer">
+    <div class="container">
+      <div class="row">
+        <section class="col-12">
+          <header>
+            <h2 class="icon solid fa-file circled"><span class="label">Posts</span></h2>
+          </header>
+          <ul class="divided">
+            <li>
+              <article class="post stub">
+                <a href="https://chrisseaton.com/phd/specialising-ruby.pdf"> 
+                  <header>
+                    <h3>Programming language: Ruby</h3> 
+                  </header>
+                </a>
+              </article>
+            </li>
+            <li>
+              <article class="post stub">
+                <a href="https://www.stroustrup.com/1995_Java_whitepaper.pdf"> 
+                  <header>
+                    <h3>Programming language: Java</h3> 
+                  </header>
+                </a>
+              </article>
+            </li>
+            <li>
+              <article class="post stub">
+                <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.6297&rep=rep1&type=pdf"> 
+                  <header>
+                    <h3>Programming language: Go</h3> 
+                  </header>
+                </a>
+              </article>
+            </li>
+            <li>
+              <article class="post stub">
+                <a href="https://www.stroustrup.com/oopsla.pdf"> 
+                  <header>
+                    <h3>Programming language: C++</h3> 
+                  </header>
+                </a>
+              </article>
+            </li>
+          </ul>
+        </section>
+        <section class="col-12">
+          <div class="center-content">
+            <header>
+              <h3>Contact</h3>
+            </header>
+            <p style="text-align: center;">Email: <a href="mailto:SelmanDemiray@outlook.com">SelmanDemiray@outlook.com</a></p> 
+            <ul class="icons" style="text-align: center;">
+              <li>
+                <a class="icon brands fa-linkedin-in" href="https://www.linkedin.com/in/selman-demiray-6ab44a110"><span class="label">Linkedin</span></a>
+              </li>
+              <li>
+                <a class="icon brands fa-github" href="https://github.com/SelmanDemiray"><span class="label">GitHub</span></a>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-12">
+          <div class="copyright">
+            <ul class="menu">
+              <li><a href="https://www.linkedin.com/in/selman-demiray-6ab44a110">LinkedIn</a></li> 
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js">
-</script>
-<script src="assets/js/jquery.dropotron.min.js">
-</script>
-<script src="assets/js/jquery.scrolly.min.js">
-</script>
-<script src="assets/js/jquery.scrollex.min.js">
-</script>
-<script src="assets/js/browser.min.js">
-</script>
-<script src="assets/js/breakpoints.min.js">
-</script>
-<script src="assets/js/util.js">
-</script>
-<script src="assets/js/main.js">
-</script>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
 <script>
-   function createMatrixRain(canvasId) {
-        const canvas = document.getElementById(canvasId);
-        const ctx = canvas.getContext("2d");
-        
-        canvas.height = window.innerHeight;  // Now covering the entire height of the page
-        canvas.width = window.innerWidth;  // Now covering the entire width of the page
-        
-        const columns = canvas.width / 10;
-        const drops = [];
+  // Matrix Rain JavaScript 
+  function createMatrixRain(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
 
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
 
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.02)";  // Very transparent edges to make it subtle
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const columns = canvas.width / 10;
+    const drops = [];
 
-            ctx.fillStyle = "#666";  // Adjusted color to better fit the theme
-            ctx.font = "10px Arial";
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = String.fromCharCode(0x30 + Math.random() * 33);
-                const x = i * 10;
-                const y = drops[i] * 10;
-
-                ctx.fillText(text, x, y);
-
-                if (y >= canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
-                drops[i]++;
-            }
-        }
-        
-        setInterval(draw, 41.25);
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
     }
 
-    createMatrixRain("matrix-rain-background");
-  </script>
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.02)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#666"; 
+      ctx.font = "10px Arial";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = String.fromCharCode(0x30 + Math.random() * 33);
+        const x = i * 10;
+        const y = drops[i] * 10;
+
+        ctx.fillText(text, x, y);
+
+        if (y >= canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 41.25);
+  }
+
+  createMatrixRain("matrix-rain-canvas");
+
+  // Mobile Navigation Toggle
+  const nav = document.getElementById('nav');
+  const toggle = document.querySelector('#nav .toggle');
+
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+
+  // Carousel Navigation
+  const carouselReel = document.querySelector('.carousel .reel');
+  const prevButton = document.querySelector('.carousel-navigation .prev');
+  const nextButton = document.querySelector('.carousel-navigation .next');
+  let scrollAmount = 0; 
+
+  prevButton.addEventListener('click', () => {
+    scrollAmount -= 300; // Adjust the value as needed
+    carouselReel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+  });
+
+  nextButton.addEventListener('click', () => {
+    scrollAmount += 30; // Adjust the value as needed
+    carouselReel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+  });
+</script>
 </body>
 </html>
+
